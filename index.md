@@ -6,8 +6,7 @@ layout: default
 
 I am a researcher and machine learning engineer specializing in cognitive brain-computer interfaces. During my doctoral and postdoctoral research, I have focused heavily on the theoretical mechanisms of neural decoding and fronto-striatal circuits. I specialize in the mathematical and theoretical modeling of high-density invasive neural recordings, bridging the gap between raw electrophysiology and advanced machine learning analysis.
 
-**Navigation:** 
-[Technical Capabilities](#technical-capabilities) | [Research & Projects](#selected-research--engineering-projects) | [Publications & Theses](#publications--theses) | [Documents & Contact](#documents--contact)
+**Navigation:** [Technical Capabilities](#technical-capabilities) | [Detailed Projects](/projects) | [Publications & Theses](#publications--theses) | [Documents & Contact](#documents--contact)
 
 ---
 
@@ -15,28 +14,10 @@ I am a researcher and machine learning engineer specializing in cognitive brain-
 
 | Category | Proficiencies |
 | :--- | :--- |
-| **Programming & Computation** | MATLAB (Expertise in neural data processing and modeling pipelines), Python, R, LaTeX, Git, GPU Computing, SLURM |
-| **Machine Learning Architectures** | Variational Autoencoders (VAEs), LSTM & GRU Networks, Convolutional Neural Networks, ResNet, Explainable AI |
+| **Programming & Computation** | MATLAB (Expertise in neural data processing and modeling), Python, R, LaTeX, Git, GPU Computing, SLURM |
+| **Machine Learning Architectures** | Variational Autoencoders (VAEs), LSTM & GRU Networks, CNNs, ResNet, Explainable AI |
 | **Neuroscience & Electrophysiology** | High-density acute recordings (NeuroNexus), Intan Recording Systems, Open Ephys, NAN Microdrives |
 | **Data Analysis** | Signal Processing, Time Series Analysis, Dimensionality Reduction |
-
----
-
-## Selected Research & Engineering Projects
-
-### Multi-Task Neural Decoding Architectures
-
-> **Engineered** a Multi-Task Gated Recurrent Variational Autoencoder (MT-GR-VAE) designed to process high-density neural recordings. This model successfully achieves multi-label, multi-class decision decoding, yielding an 80% accuracy rate on reward-associated predictions.
-
-### Cognitive State Analysis & Theory
-
-> Focused on the theoretical underpinnings of learning and decision-making within fronto-striatal circuits. Utilized adaptive loss normalization to successfully decode cognitive states from the Prefrontal Cortex and Anterior Cingulate Cortex, revealing novel insights into how the brain updates attentional priorities.
-
-### High-Volume Neural Processing Pipeline
-
-> **Engineered** a scalable, MATLAB-based data processing pipeline designed for high-density invasive electrophysiology recordings. This central repository is actively utilized across the lab by multiple members to standardize and accelerate analysis, having successfully processed over 4 TB of massive neurophysiological data to date.
->
-> [View Neural-Data-Reading Repository on GitHub](https://github.com/cgerrity/Neural-Data-Reading)
 
 ---
 
@@ -69,6 +50,6 @@ I am a researcher and machine learning engineer specializing in cognitive brain-
 * [Download Curriculum Vitae](./Curriculum_Vitae-Gerrity.pdf)
 * [Download Resume](./Resume-Gerrity.pdf)
 
-**Location:** Menlo Park, CA  
+**Location:** Menlo Park / Palo Alto, CA Area  
 **Email:** [cgerrity21@gmail.com](mailto:cgerrity21@gmail.com)  
 **Connect:** [LinkedIn](https://linkedin.com/in/charles-gerrity) | [GitHub](https://github.com/cgerrity)
