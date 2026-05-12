@@ -6,7 +6,7 @@ layout: default
 
 I recently completed my Ph.D. in Electrical Engineering at Vanderbilt University and am currently a Postdoctoral Scholar in the Department of Psychology. My research focuses on developing deep learning models for neural data analysis and cognitive brain-computer interfaces.
 
-My doctoral dissertation work focused heavily on the theoretical underpinnings of neural decoding and fronto-striatal circuits. I specialize in processing large-scale neuronal datasets (over 2 TB) using advanced deep learning architectures for decoding choice and decision-making processes. 
+My doctoral dissertation in Electrical and Computer Engineering focused heavily on the theoretical underpinnings of neural decoding and fronto-striatal circuits. I specialize in processing large-scale neuronal datasets (over 2 TB) using advanced deep learning architectures for decoding choice and decision-making processes. 
 
 ## Skills & Expertise
 * **Programming Languages:** MATLAB, Python (NumPy), R, LaTeX, Git
