@@ -5,7 +5,7 @@ title: Charles Grimes Gerrity, Ph.D.
 
 # Charles Grimes Gerrity, Ph.D.
 
-* **Neuroscientist | Machine Learning Researcher | Brain-Computer Interfaces** *
+**Neuroscientist | Machine Learning Researcher | Brain-Computer Interfaces**
 
 I am a researcher and machine learning engineer specializing in cognitive brain-computer interfaces. My academic foundation is built on a quadruple major in Chemistry, Economics, Mathematics, and Physics, which drives my rigorous, theory-first approach to complex problems.
 
