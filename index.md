@@ -7,6 +7,7 @@ layout: default
 I am a researcher and machine learning engineer specializing in cognitive brain-computer interfaces. During my doctoral and postdoctoral research, I have focused heavily on the theoretical mechanisms of neural decoding and fronto-striatal circuits. I specialize in the mathematical and theoretical modeling of high-density invasive neural recordings, bridging the gap between raw electrophysiology and advanced machine learning analysis.
 
 **Navigation:** 
+
 [Technical Capabilities](#technical-capabilities) | [Research & Projects](#selected-research--engineering-projects) | [Publications & Theses](#publications--theses) | [Documents & Contact](#documents--contact)
 
 ---
@@ -69,6 +70,6 @@ I am a researcher and machine learning engineer specializing in cognitive brain-
 * [Download Curriculum Vitae](./Curriculum_Vitae-Gerrity.pdf)
 * [Download Resume](./Resume-Gerrity.pdf)
 
-**Location:** Menlo Park, CA 
+**Location:** Menlo Park, CA
 **Email:** [cgerrity21@gmail.com](mailto:cgerrity21@gmail.com)  
 **Connect:** [LinkedIn](https://linkedin.com/in/charles-gerrity) | [GitHub](https://github.com/cgerrity)
