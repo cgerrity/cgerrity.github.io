@@ -7,7 +7,6 @@ layout: default
 I am a researcher and machine learning engineer specializing in cognitive brain-computer interfaces. During my doctoral and postdoctoral research, I have focused heavily on the theoretical mechanisms of neural decoding and fronto-striatal circuits. I specialize in the mathematical and theoretical modeling of high-density invasive neural recordings, bridging the gap between raw electrophysiology and advanced machine learning analysis.
 
 **Navigation:** 
-
 [Technical Capabilities](#technical-capabilities) | [Research & Projects](#selected-research--engineering-projects) | [Publications & Theses](#publications--theses) | [Documents & Contact](#documents--contact)
 
 ---
