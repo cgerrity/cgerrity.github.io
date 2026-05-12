@@ -39,7 +39,6 @@ During my doctoral and postdoctoral research, I have focused heavily on the theo
 * **Gerrity, C. G.**, Treuting, R. L., Peters, R. A., & Womelsdorf, T. (2025). *Neuronal decoding of decisions in multidimensional feature space using a gated recurrent variational autoencoder.* bioRxiv.
 * Treuting, R. L., Banaie Boroujeni, K., **Gerrity, C. G.**, Neumann, A., Tiesinga, P., & Womelsdorf, T. (2025). *Adaptive reinforcement learning is causally supported by anterior cingulate cortex and striatum.* Neuron.
 * **Gerrity, C. G.**, Treuting, R. L., & Womelsdorf, T. (2025). *Decoding the updating of attentional priorities in anterior cingulate cortex, prefrontal cortex and striatum.* Society for Neuroscience, San Diego, CA.
-* **Abstract Submission** (2026). *International Conference on Machine Learning (ICML)*.
 
 ---
 
