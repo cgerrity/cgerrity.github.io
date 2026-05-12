@@ -68,6 +68,6 @@ I am a researcher and machine learning engineer specializing in cognitive brain-
 * [Download Curriculum Vitae](./Curriculum_Vitae-Gerrity.pdf)
 * [Download Resume](./Resume-Gerrity.pdf)
 
-**Location:** Menlo Park / Palo Alto, CA Area  
+**Location:** Menlo Park, CA 
 **Email:** [cgerrity21@gmail.com](mailto:cgerrity21@gmail.com)  
 **Connect:** [LinkedIn](https://linkedin.com/in/charles-gerrity) | [GitHub](https://github.com/cgerrity)
