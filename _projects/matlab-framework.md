@@ -34,7 +34,7 @@ A MATLAB framework of **200+ functions** (600+ `cgg_` entries in the repository)
 Deep Learning Toolbox. It covers the whole path:
 
 - A signal-processing pipeline that turns raw recordings into windowed multi-unit activity and roughly
-  30,000 behavior-aligned trials.
+  30,000 behavior-aligned trials ([walked through step by step here]({{ '/writing/neural-data-pipeline/' | relative_url }})).
 - A modular architecture engine (ResNet paths, depthwise-separable convolutions, multi-scale temporal
   kernels) so I could sweep model families cleanly.
 - Numerically stable classification heads, a PD-controller loss scheduler, and Monte-Carlo stratified
