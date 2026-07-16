@@ -139,7 +139,7 @@ chain. Step through it below, starting from the raw wideband signal, and watch i
       <text class="t-muted" x="230" y="16">Continuous MUA</text>
       <path class="flow-accent" d="M230 120 C 260 70, 285 95, 310 80 S 360 60, 410 90" />
     </svg>
-    <p class="small muted">The interactive version needs JavaScript. It steps a synthetic recording through every stage of the pipeline, from raw voltage to a smooth firing rate.</p>
+    <p class="small muted">The interactive version needs JavaScript. It steps a synthetic recording through the signal-conversion stages, from raw voltage to a smooth firing rate.</p>
   </div>
 
   <div class="widget-live">
