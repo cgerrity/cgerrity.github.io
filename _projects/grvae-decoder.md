@@ -40,7 +40,7 @@ lives?
 ## The data
 
 I recorded from awake, behaving non-human primates using acute high-density depth probes. This is
-**intracranial electrophysiology, not EEG**. Across the project I ran 25 recording
+**intracranial electrophysiology, not EEG**. Across the project I ran 25+ recording
 sessions; the session analyzed here had **321 simultaneously recorded channels** (I pitch this as
 300+, since simultaneous counts vary across sessions) spanning frontal cortex and striatum. I
 performed the acute implantations and ran the recordings myself, on a rig I tested and used but did

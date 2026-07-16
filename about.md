@@ -34,7 +34,7 @@ system where I can see every weight.
 - Built and interpreted a deep decoder of value-based choice from **300+ simultaneously recorded
   intracranial channels** in awake non-human primates, and posted it as a
   [first-author preprint]({{ site.links.preprint }}).
-- Ran the experiments end to end: I performed the acute implantations and ran 25 high-density
+- Ran the experiments end to end: I performed the acute implantations and ran 25+ high-density
   electrophysiology sessions myself, on a rig I tested and used but did not design.
 - Wrote a **200+ function MATLAB deep-learning framework** by hand, and later designed and verified
   a **PyTorch reimplementation** of the pipeline that matches the original to roughly 1e-9 on a
