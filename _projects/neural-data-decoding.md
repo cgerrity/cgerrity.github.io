@@ -42,14 +42,14 @@ is my own hand-written code.)
 Porting a numerical model is only useful if you can prove the new one behaves like the old one, so I
 verified it **component by component**: encoder, bottleneck, classifier, and the full composite path.
 
-- The **composite forward pass matches the MATLAB original to roughly 1e-9** (maximum absolute
-  difference), with the encoder and classifier stacks tighter still. The automated test gate is set
-  at a looser **1e-5**; the observed agreement is far inside it.
-- A separate general test suite of about **792 tests** covers the data pipeline, stratified sampling,
+- The **full composite forward pass matches the MATLAB original to roughly 1e-9** (maximum absolute
+  difference), the tightest of the checks; the recurrent encoder stacks agree to about 1e-7. The
+  automated test gate is set at a looser **1e-5**, so the observed agreement is far inside it.
+- A separate general suite of **roughly 800 tests** covers the data pipeline, stratified sampling,
   checkpointing, and the MATLAB-to-PyTorch weight conversion.
 
 These are two different things and I keep them distinct: the ~1e-9 figure is the measured
-forward-pass parity, and the ~792 tests are the general suite, not a certification of that number.
+composite forward-pass parity, and the ~800 tests are the general suite, not a certification of that number.
 
 ## Engineering choices
 

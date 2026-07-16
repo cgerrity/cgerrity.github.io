@@ -10,7 +10,7 @@ card_desc: >-
   A deterministic rules engine where the LLM is confined to offline authoring and
   never touches the runtime path. A study in putting determinism where it matters.
 role: Designer and director. Built with AI coding tools.
-period: 2025
+period: 2026
 stack: [Python]
 tags: [Deterministic systems, Reliability, LLM tooling]
 links:

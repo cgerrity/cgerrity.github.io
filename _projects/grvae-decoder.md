@@ -40,7 +40,7 @@ lives?
 ## The data
 
 I recorded from awake, behaving non-human primates using acute high-density depth probes. This is
-**intracranial electrophysiology, not EEG**. Across the project I ran more than 25 recording
+**intracranial electrophysiology, not EEG**. Across the project I ran 25 recording
 sessions; the session analyzed here had **321 simultaneously recorded channels** (I pitch this as
 300+, since simultaneous counts vary across sessions) spanning frontal cortex and striatum. I
 performed the acute implantations and ran the recordings myself, on a rig I tested and used but did
@@ -106,7 +106,7 @@ space predicts the chosen object's features, one small sub-network per feature d
 
 I chose recurrent units so the model could use the temporal structure of the signal as evidence
 accumulates toward the choice. I swept six model families (feedforward, GRU, LSTM, convolutional,
-ResNet, and a multi-scale convolutional variant); the GRU encoder with an LSTM classifier came out on
+ResNet, and a multi-filter convolutional variant); the GRU encoder with an LSTM classifier came out on
 top, and the non-neural baselines (logistic regression, SVMs, naive Bayes) could not beat chance.
 
 Training ran in a MATLAB deep-learning framework I wrote by hand, on a SLURM cluster, with a

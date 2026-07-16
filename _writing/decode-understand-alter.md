@@ -43,13 +43,13 @@ a single future-work sentence.
 The first step was the forward map: the best model of the chosen object's features given the neural
 signal. That became the [gated-recurrent variational autoencoder]({{ '/projects/grvae-decoder/' | relative_url }}),
 a first-author preprint. It reads the choice from 300+ simultaneously recorded intracranial channels
-at well above chance. This is the "read" side of a brain-computer interface, taken end to end: I
+above chance. This is the "read" side of a brain-computer interface, taken end to end: I
 collected the data, wrote the pipeline, and built and validated the decoder.
 
 ## Understand (done) {#understand}
 
 The second step was to interrogate the decoder and the data: which task variables are present in the
-activity, and which channels, regions, and latent units the model relies on. That is the regression
+activity, which channels and regions the model relies on, and what its latent space encodes. That is the regression
 and correlation analysis in the dissertation plus the
 [Importance Analysis]({{ '/writing/attribution-as-interpretability/' | relative_url }}). It located
 area-specific contributions across the anterior cingulate cortex, prefrontal cortex, and caudate, and

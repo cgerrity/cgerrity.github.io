@@ -11,7 +11,7 @@ card_desc: >-
   detection and phase estimation against synthetic ground truth.
 role: Sole author.
 period: 2019–2021
-stack: [MATLAB, Hilbert transform, Goertzel, Levenberg–Marquardt]
+stack: [MATLAB, Hilbert transform, Wavelet analysis, Optimization]
 tags: [Signal processing, Detection & estimation, Oscillations]
 links:
   - { label: "Read the thesis", url: "https://hdl.handle.net/1803/16957", primary: true }
@@ -22,19 +22,24 @@ description: >-
 
 ## The problem
 
-Phase-locked electrical stimulation of fronto-striatal circuits depends on detecting **beta-band
-(12–25 Hz) LFP oscillation bursts** and characterizing their phase accurately. The catch is that
-burst-detection algorithms have many tunable settings and no obvious way to know which settings are
-correct on real data, where you never see the ground truth.
+Phase-locked electrical stimulation of oscillatory bursts depends on detecting **beta-band
+(12.5–30 Hz) LFP bursts** and characterizing their phase accurately. The catch is that
+burst-detection methods have many tunable parameters, usually set by hand, and no obvious way to know
+which settings are correct on real data, where you never see the ground truth.
 
 ## What I built
 
-An **offline framework that benchmarks and auto-tunes** these detectors against synthetic ground
-truth, using bursts generated from Morlet wavelets so the true onset, offset, and phase are known. It
-generates features with the **Hilbert transform**, the **Goertzel algorithm**, and non-linear
-sinusoidal (**Levenberg–Marquardt**) fitting, classifies bursts by threshold, and characterizes their
-phase. Because the synthetic bursts have known properties, the framework can score any algorithm's
-output and search its settings systematically.
+An **offline framework that implements, benchmarks, and auto-tunes five burst detection and
+characterization methods**: Hilbert Magnitude, Hilbert Frequency, Peak and Trough, Cosine Template,
+and Wavelet. Each method both detects when a burst occurs and characterizes its instantaneous
+amplitude, frequency, and phase. To score them I used the **F-beta score** as the objective, and to
+find good parameters I searched the tuning space with **univariate grid search and creeping random
+search** rather than hand-picking values.
+
+It runs on two datasets: a **synthetic dataset** built from cosine-enveloped, wavelet-like bursts on
+a realistic red-noise (1/f²) background, where the true onset, offset, and phase are known, and a
+**real primate dataset**. Because the synthetic bursts have known properties, the framework can score
+any method against ground truth and tune it systematically.
 
 ## What it is, and what it is not
 

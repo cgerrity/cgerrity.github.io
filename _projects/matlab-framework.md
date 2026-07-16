@@ -57,7 +57,7 @@ distinct because they are different things.
 ## The channel-map fix
 
 This one is my own account, from lab experience rather than the dissertation. An inverted
-probe-to-headstage routing transform scrambled channel order and had **stalled two prior researchers**
+probe-to-EIB (electrode interface board) routing transform scrambled channel order and had **stalled two prior researchers**
 on the foundational dataset. I reverse-engineered the full signal path, from the probe through the
 electrode interface board, the Intan headstage, and the Open Ephys recorder, rebuilt the channel map
 programmatically from first principles, and validated it against the spatial-correlation structure you

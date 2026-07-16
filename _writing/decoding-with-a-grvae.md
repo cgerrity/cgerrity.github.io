@@ -161,16 +161,17 @@ separately.
 
 The model minimizes a single composite loss with three parts:
 
-<div class="equation" role="img" aria-label="The loss equals the reconstruction loss plus beta times the KL divergence plus the classification loss">
-  <span class="var">ℒ</span> <span class="op">=</span> <span class="var">ℒ</span><sub>recon</sub> <span class="op">+</span> <span class="var">β</span> <span class="op">·</span> <span class="var">D</span><sub>KL</sub> <span class="op">+</span> <span class="var">ℒ</span><sub>classify</sub>
+<div class="equation" role="img" aria-label="The loss equals lambda-r times the reconstruction loss plus lambda-c times the classification loss plus lambda-KL times the KL divergence">
+  <span class="var">ℒ</span> <span class="op">=</span> <span class="var">λ</span><sub>r</sub> <span class="var">ℒ</span><sub>recon</sub> <span class="op">+</span> <span class="var">λ</span><sub>c</sub> <span class="var">ℒ</span><sub>classify</sub> <span class="op">+</span> <span class="var">λ</span><sub>KL</sub> <span class="var">D</span><sub>KL</sub>
 </div>
-<p class="eq-note">Reconstruction keeps the latent faithful to the signal; the KL term keeps the latent close to a simple prior; the classification term makes it decode the choice.</p>
+<p class="eq-note">Reconstruction keeps the latent faithful to the signal; the KL term keeps the latent close to a simple prior; the classification term makes it decode the choice. In the optimal model the reconstruction term carries most of the weight (about 100× the other two).</p>
 
-Reconstruction pulls the latent toward faithfully representing the input. The KL term keeps the
-encoded distributions close to a simple standard-normal prior, which is what regularizes the latent
-space. The classification term makes the latent useful for the actual decoding task. I used
-class-weighted cross-entropy for the classifiers so the over-represented neutral feature would not
-dominate.
+All three terms are weighted. Reconstruction pulls the latent toward faithfully representing the input,
+and in the chosen model it is weighted about 100 times the others, so the latent space stays close to
+the signal. The KL term keeps the encoded distributions close to a simple standard-normal prior, which
+regularizes the latent space. The classification term makes the latent useful for the actual decoding
+task. I used class-weighted cross-entropy for the classifiers so the over-represented neutral feature
+would not dominate.
 
 Everything trained in a **MATLAB deep-learning framework I wrote by hand**, on a SLURM cluster,
 with **hierarchical stratified k-fold cross-validation** that balances every fold across feature,
