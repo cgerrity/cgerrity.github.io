@@ -1,27 +1,15 @@
 <!DOCTYPE html>
-<html lang="en-US">
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="{{ "/assets/css/style.css?v=" | append: site.github.build_revision | relative_url }}">
-  </head>
-  <body>
-    <header class="page-header" role="banner">
-      <img src="{{ "/CV_Photo_Zoom.jpg" | relative_url }}" style="width: 120px; border-radius: 50%; margin-bottom: 1rem; border: 3px solid rgba(255,255,255,0.3);">
-      <h1 class="project-name">{{ site.title }}</h1>
-      <h2 class="project-tagline">{{ site.description }}</h2>
-      <nav style="margin-top: 1.5rem;">
-        <a href="{{ "/" | relative_url }}" style="color: white; margin-right: 20px; text-decoration: none; font-weight: bold; border: 1px solid rgba(255,255,255,0.4); padding: 5px 15px; border-radius: 4px;">Home</a>
-        <a href="{{ "/projects" | relative_url }}" style="color: white; margin-right: 20px; text-decoration: none; font-weight: bold; border: 1px solid rgba(255,255,255,0.4); padding: 5px 15px; border-radius: 4px;">Detailed Projects</a>
-        <a href="https://scholar.google.com/citations?user=nlh0UWcAAAAJ" style="color: white; text-decoration: none; font-weight: bold; border: 1px solid rgba(255,255,255,0.4); padding: 5px 15px; border-radius: 4px;">Scholar</a>
-      </nav>
-    </header>
-
-    <main id="content" class="main-content" role="main">
-      {{ content }}
-      <footer class="site-footer">
-        <span class="site-footer-owner">Maintained by Charles Grimes Gerrity, Ph.D.</span>
-      </footer>
-    </main>
-  </body>
+<html lang="{{ site.lang | default: 'en' }}">
+<head>
+  {% include head.html %}
+</head>
+<body>
+  <a class="skip-link" href="#content">Skip to content</a>
+  {% include header.html %}
+  <main id="content" tabindex="-1">
+    {{ content }}
+  </main>
+  {% include footer.html %}
+  <script src="{{ '/assets/js/site.js' | relative_url }}" defer></script>
+</body>
 </html>

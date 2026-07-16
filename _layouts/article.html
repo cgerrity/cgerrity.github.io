@@ -1,0 +1,31 @@
+---
+layout: default
+---
+{%- assign words = content | number_of_words -%}
+{%- assign rt = words | divided_by: 220 | plus: 1 -%}
+<div class="wrap">
+  <header class="article-header">
+    <a class="back-link" href="{{ '/writing/' | relative_url }}">← All writing</a>
+    {% if page.tags %}<div class="tags" style="margin-bottom: .8rem;">{% for t in page.tags %}<span class="tag tag-accent">{{ t }}</span>{% endfor %}</div>{% endif %}
+    <h1>{{ page.title }}</h1>
+    {% if page.dek %}<p class="article-dek">{{ page.dek }}</p>{% endif %}
+    <div class="article-meta">
+      {% if page.date %}<span>{{ page.date | date: "%B %Y" }}</span><span class="dot">·</span>{% endif %}
+      <span>{{ rt }} min read</span>
+      {% if page.status %}<span class="dot">·</span><span>{{ page.status }}</span>{% endif %}
+    </div>
+  </header>
+
+  <div class="prose article-body">
+    {% if page.toc %}
+    <nav class="toc" aria-label="Contents">
+      <div class="toc-title">Contents</div>
+      <ol>
+        {% for item in page.toc %}<li><a href="#{{ item.id }}">{{ item.label }}</a></li>{% endfor %}
+      </ol>
+    </nav>
+    {% endif %}
+
+    {{ content }}
+  </div>
+</div>

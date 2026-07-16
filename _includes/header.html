@@ -1,0 +1,20 @@
+{%- assign u = page.url -%}
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="{{ '/' | relative_url }}">
+      <span class="brand-mark" aria-hidden="true">CG</span>Charles&nbsp;Gerrity
+    </a>
+    <nav class="nav" aria-label="Primary">
+      <a href="{{ '/' | relative_url }}" {% if u == "/" %}class="active" aria-current="page"{% endif %}>Home</a>
+      <a href="{{ '/projects/' | relative_url }}" {% if u contains "/projects" %}class="active" aria-current="page"{% endif %}>Research</a>
+      <a href="{{ '/writing/' | relative_url }}" {% if u contains "/writing" %}class="active" aria-current="page"{% endif %}>Writing</a>
+      <a href="{{ '/publications/' | relative_url }}" {% if u contains "/publications" %}class="active" aria-current="page"{% endif %}>Publications</a>
+      <a href="{{ '/about/' | relative_url }}" {% if u contains "/about" %}class="active" aria-current="page"{% endif %}>About</a>
+      <a href="{{ site.links.cv | relative_url }}">CV</a>
+    </nav>
+    <button class="theme-toggle" type="button" aria-label="Toggle light and dark theme" aria-pressed="false" title="Toggle theme">
+      <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+    </button>
+  </div>
+</header>

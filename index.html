@@ -1,0 +1,213 @@
+---
+layout: default
+title: Home
+description: >-
+  Charles Grimes Gerrity, Ph.D., computational neuroscientist and machine
+  learning engineer who reverse-engineers how neural activity becomes decisions,
+  in biological brains and in his own deep-learning models. Moving into
+  mechanistic interpretability. Menlo Park, CA.
+---
+
+<section class="hero">
+  <div class="wrap">
+    <div class="hero-grid">
+      <div class="hero-text">
+        <h1>Charles Grimes Gerrity, Ph.D.</h1>
+        <p class="role">Computational neuroscientist &amp; machine learning engineer</p>
+        <p class="pitch">
+          I reverse-engineer how neural activity becomes decisions, in monkey brains
+          and in my own deep-learning models. I am now moving into mechanistic
+          interpretability.
+        </p>
+
+        <div class="proof link-row">
+          <a class="btn btn-primary" href="{{ site.links.preprint }}">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M8 13h8M8 17h5"/></svg>
+            Read the preprint
+          </a>
+          <a class="btn" href="{{ site.links.github }}">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5A11.5 11.5 0 0 0 .5 12a11.5 11.5 0 0 0 7.86 10.92c.58.1.79-.25.79-.56v-2c-3.2.7-3.88-1.36-3.88-1.36-.53-1.34-1.3-1.7-1.3-1.7-1.06-.72.08-.71.08-.71 1.17.08 1.78 1.2 1.78 1.2 1.04 1.78 2.73 1.27 3.4.97.1-.75.4-1.27.73-1.56-2.55-.29-5.24-1.28-5.24-5.7 0-1.26.45-2.29 1.19-3.1-.12-.29-.51-1.46.11-3.05 0 0 .97-.31 3.18 1.18a11 11 0 0 1 5.8 0c2.2-1.5 3.17-1.18 3.17-1.18.63 1.59.24 2.76.12 3.05.74.81 1.19 1.84 1.19 3.1 0 4.43-2.7 5.4-5.26 5.69.41.36.78 1.05.78 2.12v3.15c0 .31.2.67.8.56A11.5 11.5 0 0 0 23.5 12 11.5 11.5 0 0 0 12 .5z"/></svg>
+            GitHub
+          </a>
+          <a class="btn" href="{{ site.links.scholar }}">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10 12 4 2 10l10 6 10-6z"/><path d="M6 12v5c0 1 2.7 3 6 3s6-2 6-3v-5"/></svg>
+            Google Scholar
+          </a>
+          <a class="btn" href="{{ site.links.cv | relative_url }}">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg>
+            CV
+          </a>
+          <a class="btn" href="mailto:{{ site.links.email }}">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 6L2 7"/></svg>
+            Email
+          </a>
+        </div>
+
+        <div class="status-line">
+          <span class="status-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            Menlo Park, CA
+          </span>
+          <span class="status-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="9"/></svg>
+            US work-authorized (no visa sponsorship)
+          </span>
+          <span class="status-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+            Available now
+          </span>
+        </div>
+      </div>
+
+      <img class="hero-photo" src="{{ '/assets/img/charles-gerrity.jpg' | relative_url }}"
+           width="230" height="230"
+           alt="Charles Grimes Gerrity">
+    </div>
+  </div>
+</section>
+
+<section class="reveal">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow">Selected work</div>
+      <h2>Three things worth a closer look</h2>
+      <p class="lead">The decoder, the attribution method I used to interrogate it, and a write-up of how it works.</p>
+    </div>
+
+    <div class="card-grid featured-grid">
+      <article class="card">
+        <span class="card-kicker">Doctoral research · first-author preprint</span>
+        <h3><a href="{{ '/projects/grvae-decoder/' | relative_url }}">Decoding decisions with a gated-recurrent VAE</a></h3>
+        <p>
+          A variational autoencoder that reads a monkey's chosen object, along four
+          visual feature dimensions, from 300+ simultaneously recorded intracranial
+          channels. About 62% balanced accuracy across all four features (roughly 15%
+          above chance once chance-corrected), and about 80% when decoding is restricted
+          to the rewarded feature.
+        </p>
+        <div class="card-meta">
+          <span class="tag">Variational autoencoders</span>
+          <span class="tag">Neural decoding</span>
+        </div>
+        <span class="card-arrow">Read more →</span>
+      </article>
+
+      <article class="card">
+        <span class="card-kicker">The interpretability bridge</span>
+        <h3><a href="{{ '/projects/importance-analysis/' | relative_url }}">Feature attribution on my own decoders</a></h3>
+        <p>
+          Shuffle a neural input, a whole brain region, or a latent unit, and measure how
+          far decoding accuracy falls. Validated with Monte Carlo and permutation testing,
+          this located area-specific contributions to the decode. It is the same question
+          ablation and activation patching ask of artificial networks.
+        </p>
+        <div class="card-meta">
+          <span class="tag">Attribution</span>
+          <span class="tag">Explainability</span>
+        </div>
+        <span class="card-arrow">Read more →</span>
+      </article>
+
+      <article class="card">
+        <span class="card-kicker">Writing</span>
+        <h3><a href="{{ '/writing/decoding-with-a-grvae/' | relative_url }}">How the decoder works, without the code</a></h3>
+        <p>
+          A self-contained walkthrough of the model: the reparameterization trick, what the
+          latent space is doing, and how each accuracy number is actually scored. Includes an
+          interactive figure so you can see the sampling step for yourself.
+        </p>
+        <div class="card-meta">
+          <span class="tag">Explainer</span>
+          <span class="tag">Interactive</span>
+        </div>
+        <span class="card-arrow">Read the write-up →</span>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="reveal">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow">Focus</div>
+      <h2>Where this work points</h2>
+    </div>
+    <div class="card-grid">
+      <div class="card">
+        <span class="card-kicker">Moving in</span>
+        <h3>Mechanistic interpretability</h3>
+        <p>
+          I reverse-engineer how a trained network turns activity into an output, and I verify
+          my claims carefully. I have done this on my own neural decoders, not yet on
+          transformers, and I am deliberately moving into interpretability of artificial
+          networks. <a href="{{ '/about/' | relative_url }}">More on the transition →</a>
+        </p>
+      </div>
+      <div class="card">
+        <span class="card-kicker">Hands-on</span>
+        <h3>Neurotech &amp; brain-computer interfaces</h3>
+        <p>
+          I ran 25+ acute high-density recording sessions, performed the implantations myself,
+          and built the pipeline that turned more than two terabytes of intracranial signals
+          into behavior-aligned trials. <a href="{{ '/projects/' | relative_url }}">See the projects →</a>
+        </p>
+      </div>
+      <div class="card">
+        <span class="card-kicker">Builder</span>
+        <h3>Neural-data ML &amp; research engineering</h3>
+        <p>
+          A 200+ function training framework I wrote by hand, plus a PyTorch reimplementation I
+          designed and verified to roughly 1e-9 forward-pass parity. I work fluently with AI
+          coding tools. <a href="{{ '/projects/neural-data-decoding/' | relative_url }}">See the port →</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="reveal">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow">Recent</div>
+      <h2>Updates</h2>
+    </div>
+    <ul class="news">
+      <li>
+        <time datetime="2026-07">Jul 2026</time>
+        <span class="news-body">Published new writing: <a href="{{ '/writing/decoding-with-a-grvae/' | relative_url }}">decoding value-based choice with a GRVAE</a>, <a href="{{ '/writing/attribution-as-interpretability/' | relative_url }}">feature attribution as a bridge to interpretability</a>, and <a href="{{ '/writing/decode-understand-alter/' | relative_url }}">the research arc that connects them</a>.</span>
+      </li>
+      <li>
+        <time datetime="2025-11">Nov 2025</time>
+        <span class="news-body">Presented decoding work at the Society for Neuroscience annual meeting (San Diego).</span>
+      </li>
+      <li>
+        <time datetime="2025-08">Aug 2025</time>
+        <span class="news-body">First-author preprint on the GRVAE decoder posted to <a href="{{ site.links.preprint }}">bioRxiv</a>.</span>
+      </li>
+      <li>
+        <time datetime="2025">2025</time>
+        <span class="news-body">Co-authored study on the anterior cingulate cortex and striatum in adaptive reinforcement learning published in <em>Neuron</em>.</span>
+      </li>
+      <li>
+        <time datetime="2025">2025</time>
+        <span class="news-body">Began postdoctoral work in the Womelsdorf lab at Vanderbilt.</span>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<section class="reveal">
+  <div class="wrap">
+    <div class="card" style="text-align: center; align-items: center;">
+      <h3 style="font-size: 1.35rem;">Hiring, or want to compare notes?</h3>
+      <p style="max-width: 52ch; margin-inline: auto;">
+        I am open to roles in AI interpretability, neurotechnology, and neural-data machine
+        learning. The fastest way to reach me is email.
+      </p>
+      <div class="link-row" style="justify-content: center; margin-top: .5rem;">
+        <a class="btn btn-primary" href="mailto:{{ site.links.email }}">{{ site.links.email }}</a>
+        <a class="btn" href="{{ site.links.cv | relative_url }}">Curriculum vitae</a>
+      </div>
+    </div>
+  </div>
+</section>

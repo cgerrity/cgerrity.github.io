@@ -1,3 +1,75 @@
-theme: jekyll-theme-cayman
 title: Charles Grimes Gerrity, Ph.D.
-description: Computational Neuroscientist and Machine Learning Engineer
+tagline: Computational neuroscientist and machine learning engineer
+description: >-
+  Computational neuroscientist and machine learning engineer who reverse-engineers
+  how neural activity becomes decisions, in biological brains and in his own
+  deep-learning models. Moving into mechanistic interpretability.
+url: https://cgerrity.github.io
+baseurl: ""
+lang: en-US
+
+author:
+  name: Charles Grimes Gerrity
+  email: cgerrity21@gmail.com
+
+# One-line positioning used in the hero.
+positioning: >-
+  I reverse-engineer how neural activity becomes decisions, in monkey brains and
+  in my own deep-learning models. I am now moving into mechanistic interpretability.
+
+# Scannable logistics for recruiters.
+location: Menlo Park, CA
+availability: Available now
+work_authorization: US work-authorized (no visa sponsorship needed)
+
+# Canonical outbound links (used across the site; single source of truth).
+links:
+  github: https://github.com/cgerrity
+  scholar: https://scholar.google.com/citations?user=nlh0UWcAAAAJ&hl=en
+  linkedin: https://linkedin.com/in/charles-gerrity
+  preprint: https://www.biorxiv.org/content/10.1101/2025.08.20.671126v1
+  cv: /Curriculum_Vitae-Gerrity.pdf
+  resume: /Resume-Gerrity.pdf
+  email: cgerrity21@gmail.com
+
+# Build settings
+markdown: kramdown
+highlighter: rouge
+kramdown:
+  input: GFM
+  hard_wrap: false
+  syntax_highlighter: rouge
+
+collections:
+  projects:
+    output: true
+    permalink: /projects/:name/
+  writing:
+    output: true
+    permalink: /writing/:name/
+
+defaults:
+  - scope:
+      path: ""
+      type: projects
+    values:
+      layout: project
+  - scope:
+      path: ""
+      type: writing
+    values:
+      layout: article
+  - scope:
+      path: ""
+    values:
+      layout: default
+
+exclude:
+  - README.md
+  - Gemfile
+  - Gemfile.lock
+  - vendor
+  - .claude
+  - "*.log"
+  - "*.aux"
+  - LICENSE

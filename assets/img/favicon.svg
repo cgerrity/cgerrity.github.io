@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" role="img" aria-label="CG">
+  <rect width="32" height="32" rx="7" fill="#0b5394"/>
+  <!-- stylized spike train / decoded signal motif -->
+  <path d="M4 20 L8 20 L9.5 11 L11 23 L12.5 16 L14 20 L28 20"
+        fill="none" stroke="#ffffff" stroke-width="1.6"
+        stroke-linecap="round" stroke-linejoin="round" opacity="0.9"/>
+  <circle cx="9.5" cy="11" r="1.5" fill="#ffffff"/>
+</svg>

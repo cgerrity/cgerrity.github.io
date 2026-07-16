@@ -1,0 +1,37 @@
+---
+layout: default
+title: Writing
+permalink: /writing/
+description: >-
+  Plain-language explainers by Charles Gerrity on neural decoding, variational
+  autoencoders, and feature attribution as a bridge to mechanistic interpretability.
+---
+
+{%- assign posts = site.writing | sort: "order" -%}
+
+<div class="wrap">
+  <header class="page-header reveal">
+    <h1>Writing</h1>
+    <p class="lead">
+      Plain-language walkthroughs of the methods behind my work, so you can understand it without
+      opening a repository. Each one is meant to stand on its own.
+    </p>
+  </header>
+
+  <section class="reveal">
+    <div class="card-grid">
+      {% for post in posts %}
+      <article class="card">
+        {% if post.tags %}<span class="card-kicker">{{ post.tags | first }}</span>{% endif %}
+        <h3><a href="{{ post.url | relative_url }}">{{ post.title }}</a></h3>
+        <p>{{ post.dek | default: post.description }}</p>
+        <div class="card-meta">
+          {% if post.date %}<span class="tag">{{ post.date | date: "%b %Y" }}</span>{% endif %}
+          {% if post.interactive %}<span class="tag tag-accent">Interactive</span>{% endif %}
+        </div>
+        <span class="card-arrow">Read →</span>
+      </article>
+      {% endfor %}
+    </div>
+  </section>
+</div>

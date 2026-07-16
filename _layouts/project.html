@@ -1,0 +1,50 @@
+---
+layout: default
+---
+<div class="wrap">
+  <div style="padding-block: var(--space-5) var(--space-3);">
+    <a class="back-link" href="{{ '/projects/' | relative_url }}">← All research &amp; projects</a>
+    {% if page.kicker %}<div class="eyebrow">{{ page.kicker }}</div>{% endif %}
+    <h1 style="font-size: clamp(1.9rem, 1.3rem + 2vw, 2.7rem); letter-spacing: -.02em;">{{ page.title }}</h1>
+    {% if page.summary %}<p class="lead" style="color: var(--color-text-muted); font-size: 1.15rem; margin-top: .7rem; max-width: 60ch;">{{ page.summary }}</p>{% endif %}
+  </div>
+
+  <div class="project-layout">
+    <div class="prose">
+      {{ content }}
+    </div>
+
+    <aside class="project-aside">
+      {% if page.role or page.period or page.stack %}
+      <div class="aside-block">
+        <h3>At a glance</h3>
+        <dl>
+          {% if page.role %}<dt>Role</dt><dd>{{ page.role }}</dd>{% endif %}
+          {% if page.period %}<dt>Period</dt><dd>{{ page.period }}</dd>{% endif %}
+          {% if page.stack %}<dt>Stack</dt><dd>{{ page.stack | join: ", " }}</dd>{% endif %}
+        </dl>
+      </div>
+      {% endif %}
+
+      {% if page.links %}
+      <div class="aside-block">
+        <h3>Links</h3>
+        <div class="aside-links">
+          {% for l in page.links %}
+          <a class="btn{% if l.primary %} btn-primary{% endif %}" href="{{ l.url }}">{{ l.label }}</a>
+          {% endfor %}
+        </div>
+      </div>
+      {% endif %}
+
+      {% if page.tags %}
+      <div class="aside-block">
+        <h3>Topics</h3>
+        <div class="tags">
+          {% for t in page.tags %}<span class="tag">{{ t }}</span>{% endfor %}
+        </div>
+      </div>
+      {% endif %}
+    </aside>
+  </div>
+</div>
