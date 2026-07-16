@@ -145,7 +145,7 @@ chain. Step through it below, starting from the raw wideband signal, and watch i
   <div class="widget-live">
     <div class="stepper-head">
       <div>
-        <div class="stepper-stage">Stage <span class="s-num">1</span> of 7: <span class="s-name">Wideband</span></div>
+        <div class="stepper-stage">Stage <span class="s-num">1</span> of <span class="s-total">8</span>: <span class="s-name">Wideband</span></div>
         <div class="stepper-param s-param">raw recording, 30 kHz</div>
       </div>
       <div class="stepper-controls">
@@ -154,11 +154,11 @@ chain. Step through it below, starting from the raw wideband signal, and watch i
       </div>
     </div>
     <canvas height="260" role="img" aria-label="Synthetic neural signal at the current processing stage"></canvas>
-    <p class="stepper-desc s-desc" role="status" aria-live="polite">The raw wideband signal: slow drift, an oscillation, and sharp spikes, all mixed together.</p>
+    <p class="stepper-desc s-desc" role="status" aria-live="polite">The raw wideband signal: slow drift, an oscillation, 60 Hz line noise, and sharp spikes, all mixed together.</p>
     <div class="stepper-dots" aria-hidden="true"></div>
   </div>
 
-  <figcaption><b>Illustrative schematic, not real recordings.</b> A synthetic trace stepped through the pipeline. In the dissertation the real version of this figure runs a low-spiking anterior cingulate channel and a high-spiking caudate channel through the same stages side by side.</figcaption>
+  <figcaption><b>Illustrative schematic, not real recordings.</b> A synthetic trace stepped through the pipeline. In the dissertation the real version of this figure runs a low-spiking anterior cingulate channel and a high-spiking caudate channel through the pipeline side by side.</figcaption>
 </figure>
 
 The five filter steps, with the values I used:
@@ -318,7 +318,7 @@ channel-map fix is my own first-principles work. Once the data comes out of this
   var canvas = fig.querySelector('canvas');
   if (!canvas || !canvas.getContext) return;
   var ctx = canvas.getContext('2d');
-  var elNum = fig.querySelector('.s-num'), elName = fig.querySelector('.s-name');
+  var elNum = fig.querySelector('.s-num'), elName = fig.querySelector('.s-name'), elTotal = fig.querySelector('.s-total');
   var elParam = fig.querySelector('.s-param'), elDesc = fig.querySelector('.s-desc');
   var prev = fig.querySelector('.s-prev'), next = fig.querySelector('.s-next');
   var dots = fig.querySelector('.stepper-dots');
@@ -335,20 +335,22 @@ channel-map fix is my own first-principles work. Once the data comes out of this
     return out;
   }
   // base wideband signal
-  var drift = [], wide = [];
+  var drift = [], line = [], wide = [];
   for (var i = 0; i < N; i++) {
     var t = i / N;
     drift[i] = 24 * Math.sin(2 * Math.PI * 1.25 * t + 0.6);
     var osc = 6 * Math.sin(2 * Math.PI * 9 * t);
-    var noise = 5 * (hash(i) - 0.5);
-    wide[i] = drift[i] + osc + noise;
+    line[i] = 7 * Math.sin(2 * Math.PI * 34 * t) + 3 * Math.sin(2 * Math.PI * 68 * t);
+    var noise = 4 * (hash(i) - 0.5);
+    wide[i] = drift[i] + osc + line[i] + noise;
   }
   var spikes = [40, 55, 58, 130, 205, 210, 330, 333, 470, 610, 615, 618, 680];
   spikes.forEach(function (p) {
     if (p > 1 && p < N - 1) { wide[p] += 46; wide[p - 1] -= 16; wide[p + 1] -= 12; }
   });
   // stages
-  var rereferenced = wide.map(function (v, i) { return v - drift[i]; });
+  var notched = wide.map(function (v, i) { return v - line[i]; });
+  var rereferenced = notched.map(function (v, i) { return v - drift[i]; });
   var lowtrend = movavg(rereferenced, 17);
   var bandpass = rereferenced.map(function (v, i) { return v - lowtrend[i]; });
   var rectified = bandpass.map(function (v) { return Math.abs(v); });
@@ -358,9 +360,11 @@ channel-map fix is my own first-principles work. Once the data comes out of this
 
   var stages = [
     { name: 'Wideband', param: 'raw recording, 30 kHz', data: wide, bipolar: true,
-      desc: 'The raw wideband signal: slow drift, an oscillation, and sharp spikes, all mixed together.' },
+      desc: 'The raw wideband signal: slow drift, an oscillation, 60 Hz line noise, and sharp spikes, all mixed together.' },
+    { name: 'Notch filter', param: '60 / 120 / 180 Hz', data: notched, bipolar: true,
+      desc: 'Notch filters remove the narrow-band power-line noise at 60 Hz and its harmonics, leaving the rest of the signal intact.' },
     { name: 'Median re-reference', param: 'subtract per-probe median', data: rereferenced, bipolar: true,
-      desc: 'Subtracting the median across good channels removes the drift and shared noise, centering the trace.' },
+      desc: 'Subtracting the median across good channels removes the shared drift and common noise, centering the trace.' },
     { name: 'Band-pass', param: '750 Hz to 5000 Hz', data: bandpass, bipolar: true,
       desc: 'Keeping only the spiking band drops the remaining low-frequency activity and leaves the spikes standing out.' },
     { name: 'Rectify', param: 'absolute value', data: rectified, bipolar: false,
@@ -392,6 +396,7 @@ channel-map fix is my own first-principles work. Once the data comes out of this
     if (!W) resize();
     var st = stages[idx];
     elNum.textContent = idx + 1; elName.textContent = st.name;
+    if (elTotal) elTotal.textContent = stages.length;
     elParam.textContent = st.param; elDesc.textContent = st.desc;
     prev.disabled = idx === 0; next.disabled = idx === stages.length - 1;
     Array.prototype.forEach.call(dots.children, function (d, k) { d.className = k === idx ? 'on' : ''; });
