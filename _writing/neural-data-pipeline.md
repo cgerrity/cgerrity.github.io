@@ -41,49 +41,40 @@ trials**.
 ## The pipeline at a glance {#overview}
 
 <figure class="wide fig">
-<svg class="diagram" viewBox="0 0 960 128" role="img" aria-labelledby="pipe-title">
-  <title id="pipe-title">The neural-data pipeline: record, clean up, convert to firing rate, epoch, assemble the tensor, split into folds</title>
+<svg class="diagram" viewBox="0 0 960 424" role="img" aria-labelledby="pipe-title">
+  <title id="pipe-title">The full pipeline: preprocessing turns raw voltage into continuous multi-unit activity, processing turns it into behavior-aligned tensors, then hierarchical stratified cross-validation feeds the decoder</title>
   <defs>
     <marker id="pah" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path class="arrowhead-accent" d="M0,0 L6.5,3 L0,6 Z"/></marker>
   </defs>
-  <!-- 6 stages -->
-  <g>
-    <rect class="box" x="6" y="34" width="142" height="66" rx="8"/>
-    <text class="t-title" x="77" y="62" text-anchor="middle">1 · Record</text>
-    <text class="t-muted" x="77" y="80" text-anchor="middle">64-ch, 30 kHz</text>
-  </g>
-  <line class="flow-accent" x1="148" y1="67" x2="176" y2="67" marker-end="url(#pah)"/>
-  <g>
-    <rect class="box" x="180" y="34" width="142" height="66" rx="8"/>
-    <text class="t-title" x="251" y="62" text-anchor="middle">2 · Clean up</text>
-    <text class="t-muted" x="251" y="80" text-anchor="middle">map, re-reference</text>
-  </g>
-  <line class="flow-accent" x1="322" y1="67" x2="350" y2="67" marker-end="url(#pah)"/>
-  <g>
-    <rect class="box-accent" x="354" y="34" width="142" height="66" rx="8"/>
-    <text class="t-accent" x="425" y="62" text-anchor="middle">3 · Firing rate</text>
-    <text class="t-muted" x="425" y="80" text-anchor="middle">MUA filter chain</text>
-  </g>
-  <line class="flow-accent" x1="496" y1="67" x2="524" y2="67" marker-end="url(#pah)"/>
-  <g>
-    <rect class="box" x="528" y="34" width="142" height="66" rx="8"/>
-    <text class="t-title" x="599" y="62" text-anchor="middle">4 · Epoch</text>
-    <text class="t-muted" x="599" y="80" text-anchor="middle">±1.5 s to choice</text>
-  </g>
-  <line class="flow-accent" x1="670" y1="67" x2="698" y2="67" marker-end="url(#pah)"/>
-  <g>
-    <rect class="box" x="702" y="34" width="126" height="66" rx="8"/>
-    <text class="t-title" x="765" y="62" text-anchor="middle">5 · Tensor</text>
-    <text class="t-muted" x="765" y="80" text-anchor="middle">C × T × A</text>
-  </g>
-  <line class="flow-accent" x1="828" y1="67" x2="856" y2="67" marker-end="url(#pah)"/>
-  <g>
-    <rect class="box" x="860" y="34" width="94" height="66" rx="8"/>
-    <text class="t-title" x="907" y="62" text-anchor="middle">6 · Folds</text>
-    <text class="t-muted" x="907" y="80" text-anchor="middle">stratified</text>
-  </g>
+
+  <rect class="box-2" x="8" y="8" width="456" height="316" rx="10"/>
+  <text class="t-accent" x="30" y="38" font-weight="650">Preprocessing → continuous MUA</text>
+  <circle class="dot" cx="34" cy="72" r="3"/><text x="48" y="76">Align data sources <tspan class="t-muted">· task (Unity) + recorder via sync box</tspan></text>
+  <circle class="dot" cx="34" cy="108" r="3"/><text x="48" y="112">Apply channel map</text>
+  <circle class="dot" cx="34" cy="144" r="3"/><text x="48" y="148">Split into trials</text>
+  <circle class="dot" cx="34" cy="180" r="3"/><text x="48" y="184">Identify bad channels <tspan class="t-muted">· PCA + K-means</tspan></text>
+  <circle class="dot" cx="34" cy="216" r="3"/><text x="48" y="220">Notch filter <tspan class="t-muted">· 60 / 120 / 180 Hz</tspan></text>
+  <circle class="dot" cx="34" cy="252" r="3"/><text x="48" y="256">Median re-reference</text>
+  <circle class="dot" cx="34" cy="288" r="3"/><text x="48" y="292">Continuous MUA</text>
+  <text class="t-muted" x="48" y="308" font-size="11">band-pass · rectify · low-pass · resample · smooth</text>
+
+  <rect class="box-2" x="488" y="8" width="464" height="316" rx="10"/>
+  <text class="t-accent" x="510" y="38" font-weight="650">Processing → tensors</text>
+  <circle class="dot" cx="514" cy="72" r="3"/><text x="528" y="76">Epoch + baseline segments <tspan class="t-muted">· ±1.5 s</tspan></text>
+  <circle class="dot" cx="514" cy="108" r="3"/><text x="528" y="112">Remove aborted trials</text>
+  <circle class="dot" cx="514" cy="144" r="3"/><text x="528" y="148">Detrend <tspan class="t-muted">· baseline trend line</tspan></text>
+  <circle class="dot" cx="514" cy="180" r="3"/><text x="528" y="184">Normalize</text>
+  <circle class="dot" cx="514" cy="216" r="3"/><text x="528" y="220">Keep task-modulated channels</text>
+  <circle class="dot" cx="514" cy="252" r="3"/><text x="528" y="256">Concatenate areas <tspan class="t-muted">· C × T × A</tspan></text>
+  <text class="t-muted" x="528" y="292" font-size="11">then window in 100 ms steps, every 50 ms</text>
+
+  <line class="flow-accent" x1="236" y1="324" x2="236" y2="356" marker-end="url(#pah)"/>
+  <line class="flow-accent" x1="720" y1="324" x2="720" y2="356" marker-end="url(#pah)"/>
+  <rect class="box-accent" x="230" y="360" width="500" height="52" rx="10"/>
+  <text class="t-accent" x="480" y="384" text-anchor="middle" font-weight="650">Hierarchical stratified 10-fold cross-validation</text>
+  <text class="t-muted" x="480" y="402" text-anchor="middle">balanced across feature, area, outcome, gain/loss, learning, session, then to the decoder</text>
 </svg>
-<figcaption><b>Six stages.</b> Record the signal, clean it up, convert spikes into a continuous firing rate, cut it into trials aligned to the choice, assemble it into a channel-by-time-by-area tensor, and split it into balanced cross-validation folds.</figcaption>
+<figcaption><b>The full pipeline.</b> Preprocessing turns raw 30 kHz voltage into continuous multi-unit activity; processing turns that into behavior-aligned, channel-by-time-by-area tensors; and a hierarchical stratified cross-validation splits them into balanced folds for the decoder. Each step is walked through below.</figcaption>
 </figure>
 
 ## 1 · Recording {#recording}
@@ -101,10 +92,11 @@ and removed before anything else.
 
 ## 2 · Getting the data right {#wrangling}
 
-Before filtering, three unglamorous steps decide whether the rest of the pipeline is even valid.
+Before filtering, four unglamorous steps decide whether the rest of the pipeline is even valid.
 
-**Alignment.** The behavioral event stream and the neural recording come from different clocks and have
-to be aligned so that a sample can be tied to the moment of a choice.
+**Alignment.** The behavioral task runs in a game engine (Unity) that logs frame-by-frame events, while
+the neural recorder runs on its own clock. A sync box ties the two to a common recorder time, so any
+sample can be tied to the exact moment of a choice.
 
 **Channel mapping.** The physical order of contacts on the probe is not the order the samples arrive
 in; a channel map translates between them. On the foundational dataset that map was **inverted at the
@@ -114,8 +106,14 @@ interface board, the Intan headstage, and the Open Ephys recorder, rebuilt the m
 principles, and validated it against the spatial-correlation structure you expect from neighboring
 contacts. That unblocked the dataset. (This is my own account, from lab experience.)
 
+**Splitting into trials.** Using the aligned event stream, the continuous recording is cut into
+per-trial segments so that every step from here on operates trial by trial.
+
 **Bad-channel detection.** Dead contacts, the stimulator-wired channels, and the reference channel all
-have to be identified and dropped, which I handled with a bad-channel detection routine.
+have to be identified and dropped. I did this with a **PCA and K-means routine**: for each probe I ran
+principal component analysis across trials to summarize every channel, clustered the channels, and
+flagged any that clustered with a known artifact channel or sat alone in its own group across most
+clusterings. A real recording channel looks like its neighbors; an artifact does not.
 
 ## 3 · Cleaning the signal {#cleaning}
 
@@ -230,6 +228,17 @@ Why this window? The 700 ms before the choice is always the same behaviorally (t
 fixation to commit), so it anchors the trials to a common event even when decision times differ. The
 window reaches back before the decision and forward into feedback, so the model sees the run-up, the
 choice, and the outcome.
+
+Not every segment survives, and a few cleanups run before the trials are usable:
+
+- **Remove aborted trials.** Trials where the animal never committed, or that ran longer than 10
+  seconds (it took a break), are dropped.
+- **Detrend.** A linear trend fit to the trial's own baseline period is subtracted from both the
+  baseline and the decision epoch, removing slow drift specific to that trial.
+- **Normalize**, so trials are on a common scale.
+- **Keep task-modulated channels.** A regression of task variables (reward, learning status,
+  attentional load, gain, loss, and previous outcome) onto each channel's activity finds which channels
+  actually carry task information; channels that carry none are dropped from the decode.
 
 ## 6 · Assembling the tensor {#tensor}
 
