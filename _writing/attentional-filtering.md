@@ -5,19 +5,20 @@ date: 2026-07-16
 status: In preparation
 dek: >-
   A neuroscience finding from my current work: as an animal learns which feature
-  is rewarded, its brain represents that feature strongly while it is figuring the
-  block out, then stops representing it once the choice becomes automatic.
+  is rewarded, its brain represents that feature strongly and filters out the rest,
+  then stops representing it once the choice becomes automatic.
 tags: [Current work, Neuroscience]
 description: >-
   Current, in-progress neuroscience: using the gated-recurrent VAE decoder as a
-  probe, the rewarded feature is decodable during learning and not after, with
-  area-specific timing across caudate, anterior cingulate, and prefrontal cortex.
+  probe, the rewarded feature is decodable during learning and not after, is
+  filtered above the distractors, and runs on a striatum-first, cortex-later timeline.
 toc:
   - { id: "short-version", label: "The short version" }
   - { id: "setup", label: "The task, and the decoder as a probe" }
   - { id: "finding", label: "The finding" }
+  - { id: "filtering", label: "Target beats the distractors" }
   - { id: "areas", label: "Which areas, and when" }
-  - { id: "dimensionality", label: "How many features are in play" }
+  - { id: "after", label: "What comes back after learning" }
   - { id: "meaning", label: "What it means" }
   - { id: "status", label: "Where it stands" }
   - { id: "refs", label: "References" }
@@ -25,20 +26,20 @@ toc:
 
 <div class="callout">
   <span class="callout-title">In preparation</span>
-  This describes active, unpublished work being written up for a neuroscience audience. The comparisons
-  shown here are pre-statistics: the figures are redrawn from current analyses and the significance tests
-  are still being finalized. Treat the directions as the result, not the exact magnitudes.
+  This describes active, unpublished work from a manuscript in progress. The comparisons shown here are
+  pre-statistics: the figures are redrawn from current analyses and the significance tests are still being
+  finalized. Treat the directions as the result, not the exact magnitudes.
 </div>
 
 ## The short version {#short-version}
 
-When a monkey is learning which visual feature earns reward, its brain represents that feature clearly.
-Once the animal has learned the block and its choices have gone automatic, the explicit representation
-of that same feature fades, even though the animal keeps choosing correctly. I find this by using my
-[dissertation decoder]({{ '/writing/decoding-with-a-grvae/' | relative_url }}) as a read-out probe:
-the rewarded feature is decodable from neural activity during learning and close to undecodable after.
-I call the effect **attentional filtering**, because it looks like attention gating which feature is
-explicitly encoded, and it is filtered by where the animal is in learning.
+When a monkey is learning which visual feature earns reward, its brain represents that feature clearly,
+and represents it more strongly than the competing features it is ignoring. Once the animal has learned
+the block and its choices have gone automatic, the explicit representation of that same feature fades,
+even though the animal keeps choosing correctly. I find this by using my
+[dissertation decoder]({{ '/writing/decoding-with-a-grvae/' | relative_url }}) as a read-out probe. I
+call the effect **attentional filtering**, because it looks like attention selecting which feature is
+explicitly encoded, filtered by where the animal is in learning and by whether the feature matters.
 
 ## The task, and the decoder as a probe {#setup}
 
@@ -57,8 +58,8 @@ each point in a block.
 
 Split the trials by whether the animal is still learning the block or has already learned it, and decode
 the **target** (rewarded) feature. The two curves come apart cleanly. On learning trials the target
-feature climbs well above chance through the choice and stays there. On learned trials it sits at or
-below chance for the whole trial.
+feature climbs well above chance, and the effect becomes reliable around the animal's commitment to the
+choice. On learned trials it sits at or below chance for the whole trial.
 
 <figure class="wide fig">
 <svg class="diagram" viewBox="0 0 720 250" role="img" aria-labelledby="af-title">
@@ -81,20 +82,63 @@ below chance for the whole trial.
 
 The direction is worth sitting with. The animal is performing *better* on learned trials, and yet the
 feature that drives the reward is *less* readable from the neural activity. Explicit representation of
-the rewarded feature is a signature of the learning phase, not of good performance. It behaves like an
-attentional spotlight that is bright while the animal is working out what matters and dims once the
-behavior no longer needs it.
+the rewarded feature is a signature of the learning phase, not of good performance. Binning by how far a
+trial is from the animal's learning change-point sharpens this: peak decoding is highest on the trials
+just before the animal locks in the rule, and it collapses once the rule is learned. The representation
+behaves like an attentional spotlight that is brightest while the animal is working out what matters and
+dims once the behavior no longer needs it.
+
+## Target beats the distractors {#filtering}
+
+If this is really attentional filtering, the rewarded feature should be represented not just strongly but
+*preferentially*, above the features the animal is ignoring. It is. Separating each feature into the
+**target** (the rewarded feature), the **distractor on correct trials** (an unrewarded feature the animal
+chose correctly around), and the **distractor on error trials** gives a clean ordering during learning:
+target first, correct-trial distractor second, error-trial distractor last.
+
+<figure class="wide fig">
+<svg class="diagram" viewBox="0 0 720 268" role="img" aria-labelledby="td-title">
+<title id="td-title">Target versus distractor decoding. During learning the rewarded target feature is decoded best, then distractor features on correct trials, then on error trials. Once learned, the target is gone and the distractor feature on error trials becomes decodable.</title>
+<line x1="150" y1="24" x2="176" y2="24" stroke="#3b5a9a" stroke-width="2.6"/><text x="182" y="28" font-size="12">target feature</text>
+<line x1="300" y1="24" x2="326" y2="24" stroke="#d1682f" stroke-width="2.6"/><text x="332" y="28" font-size="12">distractor · correct</text>
+<line x1="490" y1="24" x2="516" y2="24" stroke="#e0a82e" stroke-width="2.6"/><text x="522" y="28" font-size="12">distractor · error</text>
+<line class="grid-line" x1="70" y1="45" x2="70" y2="228"/>
+<line class="grid-line" x1="70" y1="210" x2="320" y2="210"/>
+<line class="grid-line" x1="195" y1="45" x2="195" y2="228" stroke-dasharray="3 3" opacity="0.55"/>
+<text class="t-muted" x="195" y="245" text-anchor="middle" font-size="11">choice</text>
+<text class="t-title" x="195" y="58" text-anchor="middle" font-size="13">During learning</text>
+<line class="grid-line" x1="400" y1="45" x2="400" y2="228"/>
+<line class="grid-line" x1="400" y1="210" x2="650" y2="210"/>
+<line class="grid-line" x1="525" y1="45" x2="525" y2="228" stroke-dasharray="3 3" opacity="0.55"/>
+<text class="t-muted" x="525" y="245" text-anchor="middle" font-size="11">choice</text>
+<text class="t-title" x="525" y="58" text-anchor="middle" font-size="13">Once learned</text>
+<text class="t-muted" x="64" y="214" text-anchor="end" font-size="11">0</text>
+<text class="t-muted" x="64" y="83" text-anchor="end" font-size="11">0.10</text>
+<text class="t-muted" x="686" y="204" text-anchor="end" font-size="11">chance</text>
+<text class="t-muted" x="20" y="140" text-anchor="middle" transform="rotate(-90 20 140)" font-size="11">scaled accuracy</text>
+<polyline fill="none" stroke="#e0a82e" stroke-width="2.6" stroke-linejoin="round" points="70.0,229.6 99.4,223.1 128.8,210.0 143.5,196.9 172.9,181.2 195.0,170.8 217.1,162.9 239.1,157.7 261.2,155.1 290.6,152.5 320.0,149.8"/>
+<polyline fill="none" stroke="#d1682f" stroke-width="2.6" stroke-linejoin="round" points="70.0,216.5 99.4,210.0 128.8,194.3 143.5,181.2 172.9,164.2 195.0,151.2 217.1,142.0 239.1,136.8 261.2,138.1 290.6,134.2 320.0,131.5"/>
+<polyline fill="none" stroke="#3b5a9a" stroke-width="2.6" stroke-linejoin="round" points="70.0,203.5 99.4,194.3 128.8,170.8 143.5,144.6 172.9,118.5 195.0,94.9 217.1,79.2 231.8,74.0 253.8,84.5 275.9,92.3 297.9,89.7 320.0,94.9"/>
+<polyline fill="none" stroke="#e0a82e" stroke-width="2.6" stroke-linejoin="round" points="400.0,223.1 429.4,216.5 458.8,203.5 488.2,183.8 517.6,157.7 547.1,134.2 576.5,118.5 598.5,110.6 620.6,108.0 650.0,111.9"/>
+<polyline fill="none" stroke="#d1682f" stroke-width="2.6" stroke-linejoin="round" points="400.0,225.7 444.1,217.8 473.5,210.0 517.6,204.8 547.1,202.2 576.5,204.8 605.9,210.0 650.0,215.2"/>
+<polyline fill="none" stroke="#3b5a9a" stroke-width="2.6" stroke-linejoin="round" points="400.0,223.1 444.1,220.5 473.5,216.5 517.6,210.0 547.1,207.4 576.5,210.0 605.9,213.9 650.0,216.5"/>
+</svg>
+<figcaption><b>The decoder filters in the rewarded feature</b> (redrawn from current work; statistics pending). <b>Left:</b> while the animal is learning, the rewarded <i>target</i> feature is decoded best, the unrewarded <i>distractor</i> features on correct trials next, and distractor features on error trials least. That ordering is the attentional filter: the feature that matters is represented most strongly. <b>Right:</b> once the block is learned the target feature is no longer decodable, and instead the distractor feature on error trials becomes readable, as if the code that survives is the one that explains the mistake.</figcaption>
+</figure>
+
+That ordering is the filter itself. The brain is not just representing the object; it is preferentially
+representing the feature that currently matters and suppressing the ones that do not.
 
 ## Which areas, and when {#areas}
 
-Splitting the same target-feature decode by recording region gives an area-specific timing pattern. The
-caudate carries the rewarded feature earliest in the trial. The anterior cingulate cortex rises more
-slowly and ends up carrying it most strongly by the time of the choice. The prefrontal cortex lags
-throughout.
+Ablating each recording region in turn, by zeroing its inputs and measuring the drop in target-feature
+decoding, gives an area-specific timing pattern. The caudate carries the rewarded feature earliest, before
+the decision. The anterior cingulate cortex rises more slowly and ends up carrying it most strongly. The
+prefrontal cortex contributes latest, around the feedback that tells the animal whether it was right.
 
 <figure class="wide fig">
 <svg class="diagram" viewBox="0 0 720 250" role="img" aria-labelledby="area-title">
-<title id="area-title">Target-feature decoding by brain area during learning: caudate rises earliest, the anterior cingulate cortex catches up and ends highest, prefrontal cortex lags</title>
+<title id="area-title">Target-feature decoding by brain area during learning: caudate rises earliest and before the decision, the anterior cingulate cortex ends highest, prefrontal cortex contributes latest around feedback</title>
 <line class="grid-line" x1="70" y1="30" x2="70" y2="205"/>
 <line class="grid-line" x1="70" y1="205" x2="680" y2="205"/>
 <line class="grid-line" x1="246" y1="30" x2="246" y2="205" stroke-dasharray="3 3" opacity="0.6"/><text class="t-muted" x="246" y="224" text-anchor="middle" font-size="11">fixation</text>
@@ -103,83 +147,48 @@ throughout.
 <text class="t-muted" x="64" y="74" text-anchor="end" font-size="11">0.10</text>
 <polyline fill="none" stroke="#8b5fae" stroke-width="2.6" stroke-linejoin="round" points="70.0,137.7 140.6,104.0 211.2,86.5 246.5,79.8 317.1,71.7 352.4,69.0 422.9,69.0 458.2,73.1 493.5,100.0 546.5,83.8 599.4,70.4 670.0,70.4"/>
 <polyline fill="none" stroke="#4a9b5e" stroke-width="2.6" stroke-linejoin="round" points="70.0,178.1 140.6,160.6 211.2,144.4 246.5,135.0 317.1,116.2 352.4,105.4 422.9,89.2 493.5,78.5 564.1,70.4 599.4,66.3 670.0,62.3"/>
-<polyline fill="none" stroke="#3b82c4" stroke-width="2.6" stroke-linejoin="round" points="70.0,178.1 140.6,167.3 211.2,160.6 246.5,156.5 317.1,147.1 352.4,141.7 422.9,135.0 493.5,129.6 528.8,141.7 581.8,131.0 599.4,126.9 670.0,124.2"/>
+<polyline fill="none" stroke="#3b82c4" stroke-width="2.6" stroke-linejoin="round" points="70.0,180.8 140.6,172.7 211.2,167.3 246.5,163.3 317.1,156.5 352.4,151.2 422.9,143.1 493.5,135.0 546.5,124.2 599.4,110.8 634.7,102.7 670.0,100.0"/>
 <text class="t-muted" x="18" y="115" text-anchor="middle" transform="rotate(-90 18 115)" font-size="11">scaled accuracy</text>
 <line x1="420" y1="46" x2="444" y2="46" stroke="#8b5fae" stroke-width="2.6"/><text x="450" y="50">caudate</text>
 <line x1="536" y1="46" x2="560" y2="46" stroke="#4a9b5e" stroke-width="2.6"/><text x="566" y="50">ACC</text>
 <line x1="620" y1="46" x2="644" y2="46" stroke="#3b82c4" stroke-width="2.6"/><text x="650" y="50">PFC</text>
 </svg>
-<figcaption><b>Which areas carry the target feature</b> (redrawn from current work; statistics pending). On learning trials, the caudate represents the rewarded feature earliest in the trial, the anterior cingulate cortex rises more slowly and ends highest, and the prefrontal cortex lags throughout. The timing is area-specific, consistent with a striatal-first, cortical-later readout of what is currently relevant.</figcaption>
+<figcaption><b>Which areas carry the target feature</b> (redrawn from current work; statistics pending). Zeroing each recording area in turn (occlusion, a block-level ablation) and measuring the drop shows the rewarded feature is carried first by the caudate, before the decision, then by the anterior cingulate cortex, which ends highest. The prefrontal cortex contributes latest, around feedback. The readout of what is currently relevant runs striatum-first, cortex-later.</figcaption>
 </figure>
 
-A striatum-first, cortex-later ordering is the kind of thing you would expect if the caudate is
-signalling relevance early and cortical areas are picking it up over the course of the decision. I am
-stating that as a description of the timing, not a claim about the circuit mechanism, which the current
-analysis does not establish.
+I am stating that as a description of the timing, not a claim about the circuit mechanism, which the
+current analysis does not establish.
 
-## How many features are in play {#dimensionality}
+## What comes back after learning {#after}
 
-The task varies how many feature dimensions are relevant in a block: one, two, or three. Decoding the
-target feature during learning is weakest in one-dimensional blocks and much stronger in two- and
-three-dimensional ones.
-
-<figure class="fig">
-<svg class="diagram" viewBox="0 0 720 260" role="img" aria-labelledby="dim-title">
-<title id="dim-title">Target-feature decoding accuracy by number of relevant dimensions: lowest for one-dimensional blocks, highest for two-dimensional, high for three-dimensional</title>
-<line class="grid-line" x1="150" y1="30" x2="150" y2="205"/>
-<line class="grid-line" x1="150" y1="205" x2="620" y2="205"/>
-<line class="grid-line" x1="150" y1="170" x2="620" y2="170" opacity="0.35"/><text class="t-muted" x="144" y="174" text-anchor="end" font-size="11">0.1</text>
-<line class="grid-line" x1="150" y1="135" x2="620" y2="135" opacity="0.35"/><text class="t-muted" x="144" y="139" text-anchor="end" font-size="11">0.2</text>
-<line class="grid-line" x1="150" y1="100" x2="620" y2="100" opacity="0.35"/><text class="t-muted" x="144" y="104" text-anchor="end" font-size="11">0.3</text>
-<line class="grid-line" x1="150" y1="65" x2="620" y2="65" opacity="0.35"/><text class="t-muted" x="144" y="69" text-anchor="end" font-size="11">0.4</text>
-<line class="grid-line" x1="150" y1="30" x2="620" y2="30" opacity="0.35"/><text class="t-muted" x="144" y="34" text-anchor="end" font-size="11">0.5</text>
-<rect x="165" y="184" width="90" height="21" rx="3" fill="#3b5a9a"/>
-<line x1="210" y1="216" x2="210" y2="152" stroke="var(--color-text)" stroke-width="1.6"/>
-<line x1="203" y1="152" x2="217" y2="152" stroke="var(--color-text)" stroke-width="1.6"/>
-<line x1="203" y1="216" x2="217" y2="216" stroke="var(--color-text)" stroke-width="1.6"/>
-<text class="t-muted" x="210" y="224" text-anchor="middle" font-size="12">Learning 1-D</text>
-<rect x="315" y="93" width="90" height="112" rx="3" fill="#d1682f"/>
-<line x1="360" y1="114" x2="360" y2="72" stroke="var(--color-text)" stroke-width="1.6"/>
-<line x1="353" y1="72" x2="367" y2="72" stroke="var(--color-text)" stroke-width="1.6"/>
-<line x1="353" y1="114" x2="367" y2="114" stroke="var(--color-text)" stroke-width="1.6"/>
-<text class="t-muted" x="360" y="224" text-anchor="middle" font-size="12">Learning 2-D</text>
-<rect x="465" y="124" width="90" height="80" rx="3" fill="#e0a82e"/>
-<line x1="510" y1="140" x2="510" y2="109" stroke="var(--color-text)" stroke-width="1.6"/>
-<line x1="503" y1="109" x2="517" y2="109" stroke="var(--color-text)" stroke-width="1.6"/>
-<line x1="503" y1="140" x2="517" y2="140" stroke="var(--color-text)" stroke-width="1.6"/>
-<text class="t-muted" x="510" y="224" text-anchor="middle" font-size="12">Learning 3-D</text>
-<text class="t-muted" x="96" y="118" text-anchor="middle" transform="rotate(-90 96 118)" font-size="11">scaled accuracy</text>
-</svg>
-<figcaption><b>Target-feature decoding by task dimensionality</b> (redrawn from current work; statistics pending). Blocks where two or three feature dimensions are relevant give a much stronger target-feature readout than one-dimensional blocks, even though one-dimensional blocks are the simplest behaviorally. Error bars are wide and the statistics are not yet finalized; the direction of the effect is what is shown here, not a settled magnitude.</figcaption>
-</figure>
-
-That one-dimensional blocks give the weakest readout is not what you would guess from behavior, where a
-single relevant feature is the easiest thing to learn. One reading is that when more dimensions compete,
-the brain has to represent the winning feature more explicitly to pick it out, so there is more for the
-decoder to read. I put that forward as a candidate, not a conclusion, and the error bars here are wide
-enough that the honest statement is about the ordering, not the exact heights.
+The target feature is not the only thing that moves with learning. Once the block is learned and the
+target has dropped out of the decode, a different signal appears: on the occasional error trial, the
+**distractor** feature the animal presumably attended to is now decodable, the one thing that could
+explain the mistake. It shows up first in the caudate and then the anterior cingulate cortex, the same
+striatum-first ordering, and it is stronger when the animal has more to lose, on trials where a wrong
+choice costs more tokens. So the code does not simply switch off after learning; it re-points from the
+rewarded feature toward whatever feature is driving behavior at that moment.
 
 ## What it means {#meaning}
 
 Read together, these say that the explicit neural code for the feature an animal cares about is not a
-fixed property of the stimulus. It is switched on while the animal is learning, carried on a specific
-striatal-to-cortical timeline, scaled by how many features are competing, and switched off once the
-behavior is automatic. The rewarded feature of the chosen object, the **target**, is where the effect
-lives; whether the unrewarded **distractor** features show a complementary pattern is a comparison I am
-still running.
+fixed property of the stimulus. It is switched on while the animal is learning, filtered above the
+features it is ignoring, carried on a specific striatal-to-cortical timeline, and switched off once the
+behavior is automatic, at which point the code that remains is the one that explains errors. What the
+brain represents explicitly tracks what is currently worth attending to, not just what is on the screen.
 
 This is a result about brains, and it is also the reason I am rebuilding the decoder. A model that
 assumes the feature is present at every moment of every trial is exactly wrong for a signal that comes
-and goes with learning and attention. The follow-on method, a confidence-gated multiple-instance
-decoder that reads the feature when it is there and reports when it is not, is described in a
+and goes with learning and attention. The follow-on method, a confidence-gated multiple-instance decoder
+that reads the feature when it is there and reports when it is not, is described in a
 [separate write-up]({{ '/writing/beyond-persistent-coding/' | relative_url }}).
 
 ## Where it stands {#status}
 
 The analyses are done and consistent across the comparisons shown here; what remains is the formal
-statistics and the distractor-decoding contrast, after which this becomes a neuroscience write-up. I
-presented an early version of it in a lab update in April 2026 and am preparing a Society for
-Neuroscience abstract. It is the neuroscience half of my current work; the methods half is the
+statistics and a few extensions (feature-versus-dimension specificity, and separating feature identity
+from chosen value). This is being written up as a manuscript, and I presented an early version in a lab
+update in April 2026. It is the neuroscience half of my current work; the methods half is the
 [confidence-gated decoder]({{ '/writing/beyond-persistent-coding/' | relative_url }}), and both sit on
 the "understand" step of my [longer arc]({{ '/writing/decode-understand-alter/' | relative_url }}).
 
