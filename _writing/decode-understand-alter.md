@@ -130,10 +130,10 @@ itself.
 ## Where it points now {#now}
 
 Two directions follow from this. One is **mechanistic interpretability of artificial networks**, which
-is the same understand step aimed at a network whose weights are fully visible. The other is the current
-neuroscience work: **confidence-gated decoding** that asks, trial by trial, how much information the
-signal actually carries, along with stitching multiple sessions into one model, aimed at a machine
-learning venue.
+is the same understand step aimed at a network whose weights are fully visible. The other is my current
+neuroscience work: [confidence-gated decoding]({{ '/writing/beyond-persistent-coding/' | relative_url }})
+that asks, trial by trial, how much information the signal actually carries, along with stitching
+multiple sessions into one model, aimed at a machine learning venue.
 
 I write these explainers as part of that same arc, to keep the boundary between what was proven and
 what was proposed visible, to myself as much as to a reader.
