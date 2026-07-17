@@ -42,6 +42,25 @@ is my own hand-written code.)
 Porting a numerical model is only useful if you can prove the new one behaves like the old one, so I
 verified it **component by component**: encoder, bottleneck, classifier, and the full composite path.
 
+<figure class="wide fig">
+<svg class="diagram" viewBox="0 0 720 200" role="img" aria-labelledby="par-title">
+  <title id="par-title">Forward-pass parity to the MATLAB original: encoder stacks about 1e-7 and the composite about 1e-9, both far tighter than the 1e-5 automated test gate</title>
+  <line class="grid-line" x1="80" y1="120" x2="690" y2="120"/>
+  <line class="grid-line" x1="90" y1="116" x2="90" y2="124" opacity="0.6"/><text class="t-muted" x="90" y="140" text-anchor="middle" font-size="11">1e-3</text>
+  <line class="grid-line" x1="238" y1="116" x2="238" y2="124" opacity="0.6"/><text class="t-muted" x="238" y="140" text-anchor="middle" font-size="11">1e-5</text>
+  <line class="grid-line" x1="385" y1="116" x2="385" y2="124" opacity="0.6"/><text class="t-muted" x="385" y="140" text-anchor="middle" font-size="11">1e-7</text>
+  <line class="grid-line" x1="532" y1="116" x2="532" y2="124" opacity="0.6"/><text class="t-muted" x="532" y="140" text-anchor="middle" font-size="11">1e-9</text>
+  <line class="grid-line" x1="680" y1="116" x2="680" y2="124" opacity="0.6"/><text class="t-muted" x="680" y="140" text-anchor="middle" font-size="11">1e-11</text>
+  <line x1="238" y1="52" x2="238" y2="120" stroke="var(--color-text-muted)" stroke-width="1.4" stroke-dasharray="4 3"/><text class="t-muted" x="238" y="46" text-anchor="middle">test gate (1e-5)</text>
+  <circle class="dot" cx="385" cy="120" r="6"/>
+  <text class="t-accent" x="385" y="86" text-anchor="middle" font-weight="650">encoder stacks</text><text class="t-muted" x="385" y="102" text-anchor="middle" font-size="11">~1e-7</text>
+  <circle class="dot" cx="532" cy="120" r="6"/>
+  <text class="t-accent" x="532" y="164" text-anchor="middle" font-weight="650">composite forward pass</text><text class="t-muted" x="532" y="180" text-anchor="middle" font-size="11">~1e-9</text>
+  <text class="t-muted" x="385" y="196" text-anchor="middle" font-size="11">max absolute difference vs MATLAB, smaller (further right) is better</text>
+</svg>
+<figcaption><b>Verified to parity.</b> Loading the MATLAB-trained weights into the PyTorch modules and forwarding the same input, the recurrent encoder stacks agree to about 1e-7 and the full composite forward pass to about 1e-9, both far tighter than the 1e-5 tolerance the automated tests require.</figcaption>
+</figure>
+
 - The **full composite forward pass matches the MATLAB original to roughly 1e-9** (maximum absolute
   difference), the tightest of the checks; the recurrent encoder stacks agree to about 1e-7. The
   automated test gate is set at a looser **1e-5**, so the observed agreement is far inside it.

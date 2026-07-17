@@ -119,6 +119,31 @@ that balances every fold across feature, region, and outcome.
 The dissertation reports **chance-corrected (scaled) balanced accuracy**, where 0 is chance and 1 is
 perfect.
 
+<figure class="wide fig">
+<svg class="diagram" viewBox="0 0 720 262" role="img" aria-labelledby="acc-title">
+  <title id="acc-title">Decoding accuracy: about 15% above chance overall, and higher on low-attentional-load trials (1-D) than high-load (3-D)</title>
+  <line class="grid-line" x1="80" y1="210" x2="680" y2="210"/><line class="grid-line" x1="80" y1="30" x2="80" y2="210"/>
+  <line class="grid-line" x1="80" y1="150" x2="680" y2="150" opacity="0.35"/><text class="t-muted" x="72" y="154" text-anchor="end" font-size="11">0.1</text>
+  <line class="grid-line" x1="80" y1="90" x2="680" y2="90" opacity="0.35"/><text class="t-muted" x="72" y="94" text-anchor="end" font-size="11">0.2</text>
+  <line class="grid-line" x1="80" y1="30" x2="680" y2="30" opacity="0.35"/><text class="t-muted" x="72" y="34" text-anchor="end" font-size="11">0.3</text>
+  <rect x="88" y="120.0" width="64" height="90.0" fill="#0b5394"/>
+  <line x1="120" y1="132.0" x2="120" y2="108.0" stroke="var(--color-text)" stroke-width="1.4"/><line x1="112" y1="108.0" x2="128" y2="108.0" stroke="var(--color-text)" stroke-width="1.4"/><line x1="112" y1="132.0" x2="128" y2="132.0" stroke="var(--color-text)" stroke-width="1.4"/>
+  <text class="t-muted" x="120" y="228" text-anchor="middle">Overall</text>
+  <rect x="298" y="78.0" width="64" height="132.0" fill="#3b82c4"/>
+  <line x1="330" y1="99.0" x2="330" y2="57.0" stroke="var(--color-text)" stroke-width="1.4"/><line x1="322" y1="57.0" x2="338" y2="57.0" stroke="var(--color-text)" stroke-width="1.4"/><line x1="322" y1="99.0" x2="338" y2="99.0" stroke="var(--color-text)" stroke-width="1.4"/>
+  <text class="t-muted" x="330" y="228" text-anchor="middle">1-D</text>
+  <rect x="408" y="114.0" width="64" height="96.0" fill="#d1682f"/>
+  <line x1="440" y1="138.0" x2="440" y2="90.0" stroke="var(--color-text)" stroke-width="1.4"/><line x1="432" y1="90.0" x2="448" y2="90.0" stroke="var(--color-text)" stroke-width="1.4"/><line x1="432" y1="138.0" x2="448" y2="138.0" stroke="var(--color-text)" stroke-width="1.4"/>
+  <text class="t-muted" x="440" y="228" text-anchor="middle">2-D</text>
+  <rect x="518" y="150.0" width="64" height="60.0" fill="#e0b83a"/>
+  <line x1="550" y1="168.0" x2="550" y2="132.0" stroke="var(--color-text)" stroke-width="1.4"/><line x1="542" y1="132.0" x2="558" y2="132.0" stroke="var(--color-text)" stroke-width="1.4"/><line x1="542" y1="168.0" x2="558" y2="168.0" stroke="var(--color-text)" stroke-width="1.4"/>
+  <text class="t-muted" x="550" y="228" text-anchor="middle">3-D</text>
+  <text class="t-muted" x="440" y="248" text-anchor="middle" font-size="11">by attentional load</text>
+  <text class="t-muted" x="30" y="120" text-anchor="middle" transform="rotate(-90 30 120)">scaled accuracy (0 = chance)</text>
+</svg>
+<figcaption><b>Decoding accuracy</b> (redrawn from the dissertation, scaled balanced accuracy where 0 is chance and 1 is perfect). Overall the decoder reaches about 15% above chance; accuracy is highest on low-attentional-load one-dimensional trials and falls as more feature dimensions vary. Bars show the mean with 95% confidence intervals.</figcaption>
+</figure>
+
 - **Overall, across all four feature dimensions: about 62% balanced accuracy (raw), which is roughly
   15% above chance once chance-corrected.** These are the same result stated two ways.
 - **About 80% when decoding is restricted to the rewarded feature** on trials where the animal chose

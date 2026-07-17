@@ -45,6 +45,30 @@ cingulate cortex was most relevant for **joint, population-level** contributions
 degraded accuracy faster than the ranked one, so importance is best explained by channels acting
 together), while the prefrontal cortex was most relevant for **individual-channel** contributions.
 
+<figure class="wide fig">
+<svg class="diagram" viewBox="0 0 720 250" role="img" aria-labelledby="ia-bar-title">
+  <title id="ia-bar-title">Relative importance of ACC, PFC, and caudate for random (joint) and ranked (individual) channel removal</title>
+  <line class="grid-line" x1="70" y1="128" x2="680" y2="128"/>
+  <text class="t-muted" x="46" y="60" text-anchor="middle" transform="rotate(-90 46 60)">more important</text>
+  <text class="t-muted" x="46" y="196" text-anchor="middle" transform="rotate(-90 46 196)">less important</text>
+  <!-- Random group -->
+  <rect x="140" y="56" width="46" height="72" fill="#c0504d"/>
+  <rect x="194" y="128" width="46" height="27" fill="#3b5a9a"/>
+  <rect x="248" y="128" width="46" height="36" fill="#4a9b5e"/>
+  <text class="t-muted" x="240" y="210" text-anchor="middle">Random  (joint)</text>
+  <!-- Rank group -->
+  <rect x="440" y="116" width="46" height="12" fill="#c0504d"/>
+  <rect x="494" y="71" width="46" height="57" fill="#3b5a9a"/>
+  <rect x="548" y="128" width="46" height="63" fill="#4a9b5e"/>
+  <text class="t-muted" x="540" y="210" text-anchor="middle">Ranked  (individual)</text>
+  <!-- legend -->
+  <rect x="470" y="30" width="12" height="12" fill="#c0504d"/><text x="488" y="40">ACC</text>
+  <rect x="536" y="30" width="12" height="12" fill="#3b5a9a"/><text x="554" y="40">PFC</text>
+  <rect x="600" y="30" width="12" height="12" fill="#4a9b5e"/><text x="618" y="40">caudate</text>
+</svg>
+<figcaption><b>Which areas mattered</b> (redrawn from the dissertation). Under random removal, which measures joint contributions, the anterior cingulate cortex was most important; under ranked removal, which measures individual contributions, the prefrontal cortex was. The caudate sat below average in both, which is why I do not list it among the important areas.</figcaption>
+</figure>
+
 In later work, analyzing the trained model further surfaced a property I had not built in: it sharpens
 for particular feature dimensions on particular trials, a kind of attentional filtering. That is an
 ongoing analysis rather than a result of the removal study above.
