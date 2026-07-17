@@ -92,6 +92,46 @@ cingulate cortex was most relevant for **joint, population-level** contributions
 hurt accuracy faster than the ranked one, so importance is best explained by channels acting
 together), while the prefrontal cortex was most relevant for **individual-channel** contributions.
 
+<figure class="wide fig">
+<svg class="diagram" viewBox="0 0 720 240" role="img" aria-labelledby="ia-curve-title">
+  <title id="ia-curve-title">Peak decoding accuracy as channels are removed: random removal degrades accuracy faster than ranked removal</title>
+  <line class="grid-line" x1="60" y1="30" x2="60" y2="200"/>
+  <line class="grid-line" x1="60" y1="200" x2="680" y2="200"/>
+  <line class="grid-line" x1="60" y1="115" x2="680" y2="115" opacity="0.4"/>
+  <polyline fill="none" stroke="#d1682f" stroke-width="2.4" stroke-linejoin="round" points="60,44 157,46 254,49 351,52 448,55 545,61 603,82 641,116 680,158"/>
+  <polyline fill="none" stroke="#3b5a9a" stroke-width="2.4" stroke-linejoin="round" points="60,49 157,52 254,55 351,61 448,72 545,94 603,120 641,148 680,170"/>
+  <text class="t-muted" x="370" y="228" text-anchor="middle">channels removed &#8594;</text>
+  <text class="t-muted" x="22" y="115" text-anchor="middle" transform="rotate(-90 22 115)">peak accuracy</text>
+  <line x1="90" y1="182" x2="116" y2="182" stroke="#3b5a9a" stroke-width="2.4"/><text x="122" y="186">Random</text>
+  <line x1="210" y1="182" x2="236" y2="182" stroke="#d1682f" stroke-width="2.4"/><text x="242" y="186">Ranked</text>
+</svg>
+<figcaption><b>Peak accuracy as channels are removed</b> (redrawn from the dissertation). Removing channels in a random search degrades accuracy faster than removing them in rank order, which is why importance is best explained by channels acting jointly rather than one at a time.</figcaption>
+</figure>
+
+<figure class="wide fig">
+<svg class="diagram" viewBox="0 0 720 250" role="img" aria-labelledby="ia-bar-title">
+  <title id="ia-bar-title">Relative importance of ACC, PFC, and caudate for random (joint) and ranked (individual) channel removal</title>
+  <line class="grid-line" x1="70" y1="128" x2="680" y2="128"/>
+  <text class="t-muted" x="46" y="60" text-anchor="middle" transform="rotate(-90 46 60)">more important</text>
+  <text class="t-muted" x="46" y="196" text-anchor="middle" transform="rotate(-90 46 196)">less important</text>
+  <!-- Random group -->
+  <rect x="140" y="56" width="46" height="72" fill="#c0504d"/>
+  <rect x="194" y="128" width="46" height="27" fill="#3b5a9a"/>
+  <rect x="248" y="128" width="46" height="36" fill="#4a9b5e"/>
+  <text class="t-muted" x="240" y="210" text-anchor="middle">Random  (joint)</text>
+  <!-- Rank group -->
+  <rect x="440" y="116" width="46" height="12" fill="#c0504d"/>
+  <rect x="494" y="71" width="46" height="57" fill="#3b5a9a"/>
+  <rect x="548" y="128" width="46" height="63" fill="#4a9b5e"/>
+  <text class="t-muted" x="540" y="210" text-anchor="middle">Ranked  (individual)</text>
+  <!-- legend -->
+  <rect x="470" y="30" width="12" height="12" fill="#c0504d"/><text x="488" y="40">ACC</text>
+  <rect x="536" y="30" width="12" height="12" fill="#3b5a9a"/><text x="554" y="40">PFC</text>
+  <rect x="600" y="30" width="12" height="12" fill="#4a9b5e"/><text x="618" y="40">caudate</text>
+</svg>
+<figcaption><b>Which areas mattered</b> (redrawn from the dissertation). Under random removal, which measures joint contributions, the anterior cingulate cortex was most important; under ranked removal, which measures individual contributions, the prefrontal cortex was. The caudate sat below average in both, which is why I do not list it among the important areas.</figcaption>
+</figure>
+
 ## The bridge to interpretability {#bridge}
 
 Now put my method next to the standard tools of mechanistic interpretability:

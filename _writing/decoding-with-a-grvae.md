@@ -44,6 +44,50 @@ object varies along four feature dimensions, **shape, pattern, color, and arm ty
 session three of those vary and one is held neutral, and within a block of trials exactly one feature
 is the rewarded one. The animal has to discover which.
 
+<figure class="wide fig">
+<svg class="diagram" viewBox="0 0 960 250" role="img" aria-labelledby="task-title">
+  <title id="task-title">The task: the animal fixates to start, chooses one of three objects that vary in shape, pattern, color, and arm type, and gains or loses tokens as feedback</title>
+  <defs>
+    <marker id="tah" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path class="arrowhead" d="M0,0 L6.5,3 L0,6 Z"/></marker>
+  </defs>
+
+  <!-- Screen 1: fixate -->
+  <rect class="box-2" x="16" y="16" width="280" height="150" rx="8"/>
+  <rect class="box" x="120" y="28" width="72" height="14" rx="4"/>
+  <g><circle cx="132" cy="35" r="3" fill="#2e9e6b"/><circle cx="145" cy="35" r="3" fill="#2e9e6b"/><circle cx="158" cy="35" r="3" class="grid-line" fill="none" stroke="var(--color-border)"/><circle cx="171" cy="35" r="3" fill="none" stroke="var(--color-border)"/><circle cx="184" cy="35" r="3" fill="none" stroke="var(--color-border)"/></g>
+  <circle cx="156" cy="100" r="7" fill="var(--color-text)"/>
+  <text class="t-muted" x="156" y="185" text-anchor="middle">Fixate to start</text>
+
+  <line class="flow" x1="296" y1="91" x2="332" y2="91" marker-end="url(#tah)"/>
+
+  <!-- Screen 2: choose -->
+  <rect class="box-2" x="336" y="16" width="280" height="150" rx="8"/>
+  <rect class="box" x="440" y="28" width="72" height="14" rx="4"/>
+  <g><circle cx="452" cy="35" r="3" fill="#2e9e6b"/><circle cx="465" cy="35" r="3" fill="#2e9e6b"/><circle cx="478" cy="35" r="3" fill="none" stroke="var(--color-border)"/><circle cx="491" cy="35" r="3" fill="none" stroke="var(--color-border)"/><circle cx="504" cy="35" r="3" fill="none" stroke="var(--color-border)"/></g>
+  <!-- three quaddles, top one chosen -->
+  <g><ellipse cx="476" cy="78" rx="16" ry="13" fill="#6f9e5e"/><circle cx="458" cy="80" r="5" fill="#6f9e5e"/><circle cx="494" cy="80" r="5" fill="#6f9e5e"/><circle cx="470" cy="76" r="2" fill="#3c5a33"/><circle cx="482" cy="80" r="2" fill="#3c5a33"/><circle cx="476" cy="78" r="26" fill="none" stroke="var(--color-accent)" stroke-width="2.5"/></g>
+  <g><ellipse cx="420" cy="130" rx="16" ry="13" fill="#b39b82"/><circle cx="402" cy="132" r="5" fill="#b39b82"/><circle cx="438" cy="132" r="5" fill="#b39b82"/></g>
+  <g><ellipse cx="540" cy="128" rx="16" ry="13" fill="#5c84ad"/><circle cx="522" cy="130" r="5" fill="#5c84ad"/><circle cx="558" cy="130" r="5" fill="#5c84ad"/><path d="M532 124 h16 M532 132 h16" stroke="#274158" stroke-width="1.5"/></g>
+  <text class="t-muted" x="476" y="185" text-anchor="middle">Choose one of three</text>
+
+  <line class="flow" x1="616" y1="91" x2="652" y2="91" marker-end="url(#tah)"/>
+
+  <!-- Screen 3: feedback -->
+  <rect class="box-2" x="656" y="16" width="280" height="150" rx="8"/>
+  <rect class="box" x="760" y="28" width="72" height="14" rx="4"/>
+  <g><circle cx="772" cy="35" r="3" fill="#2e9e6b"/><circle cx="785" cy="35" r="3" fill="#2e9e6b"/><circle cx="798" cy="35" r="3" fill="#2e9e6b"/><circle cx="811" cy="35" r="3" fill="none" stroke="var(--color-border)"/><circle cx="824" cy="35" r="3" fill="none" stroke="var(--color-border)"/></g>
+  <g><ellipse cx="796" cy="100" rx="16" ry="13" fill="#6f9e5e"/><circle cx="778" cy="102" r="5" fill="#6f9e5e"/><circle cx="814" cy="102" r="5" fill="#6f9e5e"/><circle cx="796" cy="100" r="26" fill="none" stroke="#e0b83a" stroke-width="2.5"/></g>
+  <text x="796" y="150" text-anchor="middle" fill="#2e9e6b" font-weight="650" font-size="13">+2 tokens</text>
+  <text class="t-muted" x="796" y="185" text-anchor="middle">Gain or lose tokens</text>
+
+  <!-- feature strip -->
+  <text class="t-muted" x="16" y="222">Objects vary along four feature dimensions:</text>
+  <text class="t-accent" x="322" y="222" font-weight="650">shape · pattern · color · arm type</text>
+  <text class="t-muted" x="640" y="222">(three vary per session; one is rewarded per block)</text>
+</svg>
+<figcaption><b>The task.</b> The animal fixates to start, then chooses one of three "quaddle" objects by looking at it; a correct choice adds tokens, an error removes them. Each object varies along four feature dimensions, and in each block one feature is the rewarded one that the animal must discover.</figcaption>
+</figure>
+
 The neural data is **intracranial electrophysiology**, recorded with high-density depth probes in
 awake, behaving non-human primates. This is not EEG. The session in the paper had **321
 simultaneously recorded channels** across frontal cortex and striatum. The model's input is windowed
@@ -152,6 +196,41 @@ reconstruct the original activity `x̂`, which is the unsupervised objective tha
 organized. And a set of **classifiers** predicts the chosen object's features. There is one small
 sub-network per feature dimension, each ending in a softmax over that dimension's possible values, so
 the model outputs a separate prediction for shape, pattern, color, and arm type.
+
+<figure class="wide fig">
+<svg class="diagram" viewBox="0 0 720 250" role="img" aria-labelledby="grvae-arch-title">
+  <title id="grvae-arch-title">Architecture of the gated-recurrent variational autoencoder</title>
+  <defs>
+    <marker id="gah" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path class="arrowhead" d="M0,0 L6.5,3 L0,6 Z"/></marker>
+    <marker id="gaha" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path class="arrowhead-accent" d="M0,0 L6.5,3 L0,6 Z"/></marker>
+  </defs>
+  <rect class="box" x="8" y="92" width="120" height="78" rx="8"/>
+  <text class="t-title" x="68" y="122" text-anchor="middle">Neural input</text>
+  <text class="t-muted" x="68" y="140" text-anchor="middle">300+ channels</text>
+  <text class="t-muted" x="68" y="156" text-anchor="middle">MUA time windows</text>
+  <line class="flow" x1="128" y1="131" x2="162" y2="131" marker-end="url(#gah)"/>
+  <rect class="box" x="166" y="92" width="120" height="78" rx="8"/>
+  <text class="t-title" x="226" y="126" text-anchor="middle">GRU encoder</text>
+  <text class="t-muted" x="226" y="146" text-anchor="middle">recurrent, temporal</text>
+  <line class="flow-accent" x1="286" y1="131" x2="320" y2="131" marker-end="url(#gaha)"/>
+  <rect class="box-accent" x="324" y="86" width="150" height="90" rx="8"/>
+  <text class="t-accent" x="399" y="118" text-anchor="middle">Latent space</text>
+  <text class="t-muted" x="399" y="138" text-anchor="middle">encode to μ, σ</text>
+  <text class="t-muted" x="399" y="156" text-anchor="middle">sample z = μ + σ·ε</text>
+  <path class="flow" d="M420 86 C420 50, 470 40, 512 40" stroke-dasharray="5 4" marker-end="url(#gah)"/>
+  <rect class="box-2" x="516" y="14" width="196" height="52" rx="8"/>
+  <text class="t-title" x="614" y="36" text-anchor="middle">GRU decoder</text>
+  <text class="t-muted" x="614" y="54" text-anchor="middle">reconstruction (auxiliary)</text>
+  <line class="flow-accent" x1="474" y1="140" x2="512" y2="150" marker-end="url(#gaha)"/>
+  <rect class="box" x="516" y="92" width="196" height="146" rx="8"/>
+  <text class="t-title" x="614" y="114" text-anchor="middle">Per-feature classifiers</text>
+  <circle class="dot" cx="540" cy="138" r="3"/><text x="552" y="142">Shape</text>
+  <circle class="dot" cx="540" cy="162" r="3"/><text x="552" y="166">Pattern</text>
+  <circle class="dot" cx="540" cy="186" r="3"/><text x="552" y="190">Color</text>
+  <circle class="dot" cx="540" cy="210" r="3"/><text x="552" y="214">Arm type</text>
+</svg>
+<figcaption><b>The decoder.</b> A GRU encoder compresses windowed multi-unit activity into a probabilistic latent space. A sampled latent vector feeds two paths: a GRU decoder that reconstructs the input (an auxiliary, unsupervised objective) and a set of per-feature classifiers, one per feature dimension. The optimal configuration used a GRU encoder with an LSTM classifier.</figcaption>
+</figure>
 
 Splitting the classifier by feature matters, because the four dimensions are not equally easy and one
 is always the neutral filler. Per-feature heads let the model, and the analysis, treat them

@@ -38,6 +38,44 @@ a dependent, three-experiment pipeline aimed at one motivating question. Decode 
 the decode, alter the choice. The dissertation carried out the first two and reported the third only as
 a single future-work sentence.
 
+<figure class="wide fig">
+<svg class="diagram" viewBox="0 0 960 210" role="img" aria-labelledby="arc-title">
+  <title id="arc-title">The three-step arc: decode the choice (done), understand the decode (done), and alter the choice with stimulation (proposed, not carried out)</title>
+  <defs>
+    <marker id="arcah" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path class="arrowhead-accent" d="M0,0 L6.5,3 L0,6 Z"/></marker>
+  </defs>
+
+  <rect class="box-accent" x="12" y="34" width="286" height="122" rx="10"/>
+  <text class="t-accent" x="30" y="64" font-weight="650">1 · Decode</text>
+  <rect x="228" y="48" width="56" height="20" rx="10" fill="#2e9e6b"/>
+  <text x="256" y="62" text-anchor="middle" fill="#ffffff" font-size="11" font-weight="650">DONE</text>
+  <text class="t-muted" x="30" y="96">Read the chosen object's</text>
+  <text class="t-muted" x="30" y="114">features from neural activity.</text>
+  <text class="t-accent" x="30" y="140" font-size="11">the GRVAE decoder</text>
+
+  <line class="flow-accent" x1="298" y1="95" x2="332" y2="95" marker-end="url(#arcah)"/>
+
+  <rect class="box-accent" x="337" y="34" width="286" height="122" rx="10"/>
+  <text class="t-accent" x="355" y="64" font-weight="650">2 · Understand</text>
+  <rect x="553" y="48" width="56" height="20" rx="10" fill="#2e9e6b"/>
+  <text x="581" y="62" text-anchor="middle" fill="#ffffff" font-size="11" font-weight="650">DONE</text>
+  <text class="t-muted" x="355" y="96">Find which regions and</text>
+  <text class="t-muted" x="355" y="114">signals drive the decode.</text>
+  <text class="t-accent" x="355" y="140" font-size="11">importance analysis</text>
+
+  <line class="flow-accent" x1="623" y1="95" x2="657" y2="95" marker-end="url(#arcah)"/>
+
+  <rect class="box-2" x="662" y="34" width="286" height="122" rx="10" stroke-dasharray="6 4"/>
+  <text class="t-title" x="680" y="64" font-weight="650">3 · Alter</text>
+  <rect class="box" x="856" y="48" width="80" height="20" rx="10" stroke-dasharray="3 3"/>
+  <text x="896" y="62" text-anchor="middle" class="t-muted" font-size="10.5" font-weight="650">PROPOSED</text>
+  <text class="t-muted" x="680" y="96">Steer the choice with</text>
+  <text class="t-muted" x="680" y="114">model-derived stimulation.</text>
+  <text class="t-muted" x="680" y="140" font-size="11">designed, not carried out</text>
+</svg>
+<figcaption><b>Decode, understand, alter.</b> I executed the first two steps: a decoder that reads the choice, and an analysis of what drives it. The third, steering the choice with stimulation, was a design I proposed in my qualifying exam and did not carry out.</figcaption>
+</figure>
+
 ## Decode (done) {#decode}
 
 The first step was the forward map: the best model of the chosen object's features given the neural
