@@ -1,21 +1,20 @@
 ---
-title: "Beyond persistent coding: my current work"
-order: 5
+title: "Beyond persistent coding: confidence-gated decoding"
+order: 6
 date: 2026-07-16
 status: Work in progress
 dek: >-
-  As an animal learns, the neural code for the feature it cares about comes and
-  goes. My current work is a confidence-gated, multiple-instance decoder that
-  reads that information when it is there and reports when it is not.
+  If the neural code for a feature comes and goes, a decoder that assumes it is
+  always present is the wrong tool. My current method reads the feature when it is
+  there, reports when it is not, and does so without behavioral labels.
 tags: [Current work, Neural decoding]
 description: >-
-  Current, in-progress work: confidence-gated multiple-instance learning on the
-  gated-recurrent VAE, motivated by attentional filtering during learning in
-  fronto-striatal circuits. Targeting NeurIPS.
+  Current, in-progress method: confidence-gated multiple-instance learning on the
+  gated-recurrent VAE, motivated by attentional filtering during learning.
+  Targeting a machine-learning venue.
 toc:
   - { id: "short-version", label: "The short version" }
-  - { id: "moving-target", label: "A moving target" }
-  - { id: "persistent", label: "Why that breaks a decoder" }
+  - { id: "persistent", label: "Why persistent coding breaks" }
   - { id: "mil", label: "Multiple instance learning" }
   - { id: "confidence", label: "Confidence gating" }
   - { id: "stitching", label: "Stitching sessions together" }
@@ -25,58 +24,28 @@ toc:
 
 <div class="callout">
   <span class="callout-title">Work in progress</span>
-  This describes active, unpublished work. The attentional-filtering finding is being written up
-  (statistics pending); the confidence-gated method is built and still being refined. Numbers and
+  This describes active, unpublished work. The method is built and still being refined; the numbers and
   claims here are current directions, not settled results.
 </div>
 
 ## The short version {#short-version}
 
 My [dissertation decoder]({{ '/writing/decoding-with-a-grvae/' | relative_url }}) assumed, like most
-neural decoders, that the information it needs is present at every moment of a trial. It usually is not.
-As an animal learns which feature is rewarded, the brain's explicit code for that feature is strong
-while the animal is figuring the block out, then fades once the choice becomes automatic. Within a
-single trial, the decisive signal appears at some moments and not others. My current work rebuilds the
-decoder to handle both: a **confidence-gated, multiple-instance** model that reads the feature when it
-is there, and tells you when it is not, without needing behavioral labels to do so.
+neural decoders, that the information it needs is present at every moment of a trial. The neuroscience
+says otherwise. The [attentional-filtering result]({{ '/writing/attentional-filtering/' | relative_url }})
+shows that the brain's explicit code for the rewarded feature is strong while an animal is learning a
+block and fades once the choice becomes automatic, and within a single trial the decisive signal is
+there at some moments and not others. My current work rebuilds the decoder to handle both: a
+**confidence-gated, multiple-instance** model that reads the feature when it is there, and tells you when
+it is not, without needing behavioral labels to do so.
 
-## A moving target {#moving-target}
-
-The finding that started this is what I call **attentional filtering**. I trained the decoder to read
-all four feature dimensions of the chosen object on every trial, regardless of what was rewarded. It
-turns out the model reads the **rewarded** feature much better on trials where the animal is still
-learning the block than on trials where the feature is already learned and behavior is automatic.
-
-<figure class="wide fig">
-<svg class="diagram" viewBox="0 0 720 250" role="img" aria-labelledby="af-title">
-<title id="af-title">Target-feature decoding accuracy over the trial: high during learning trials, near chance once the feature is learned</title>
-<line class="grid-line" x1="70" y1="30" x2="70" y2="205"/>
-<line class="grid-line" x1="70" y1="161" x2="680" y2="161"/>
-<text class="t-muted" x="686" y="165" font-size="11">chance</text>
-<line class="grid-line" x1="246" y1="30" x2="246" y2="205" stroke-dasharray="3 3" opacity="0.6"/><text class="t-muted" x="246" y="224" text-anchor="middle" font-size="11">fixation</text>
-<line class="grid-line" x1="494" y1="30" x2="494" y2="205" stroke-dasharray="3 3" opacity="0.6"/><text class="t-muted" x="494" y="224" text-anchor="middle" font-size="11">choice</text>
-<text class="t-muted" x="64" y="122" text-anchor="end" font-size="11">0.05</text>
-<text class="t-muted" x="64" y="78" text-anchor="end" font-size="11">0.10</text>
-<polyline fill="none" stroke="#3b5a9a" stroke-width="2.6" stroke-linejoin="round" points="70.0,161.2 105.3,156.9 140.6,143.8 175.9,117.5 211.2,121.9 246.5,117.5 281.8,107.0 317.1,98.2 352.4,78.1 387.6,86.9 422.9,73.7 458.2,82.5 493.5,84.2 528.8,91.2 564.1,88.6 599.4,86.0 634.7,89.5 670.0,86.9"/>
-<polyline fill="none" stroke="#d1682f" stroke-width="2.6" stroke-linejoin="round" points="70.0,187.5 140.6,187.5 211.2,180.5 246.5,178.8 299.4,174.4 352.4,170.0 422.9,165.6 493.5,168.2 564.1,174.4 599.4,178.8 670.0,183.1"/>
-<text class="t-muted" x="18" y="115" text-anchor="middle" transform="rotate(-90 18 115)" font-size="11">scaled accuracy</text>
-<line x1="500" y1="46" x2="524" y2="46" stroke="#3b5a9a" stroke-width="2.6"/><text x="530" y="50">Learning</text>
-<line x1="600" y1="46" x2="624" y2="46" stroke="#d1682f" stroke-width="2.6"/><text x="630" y="50">Learned</text>
-</svg>
-<figcaption><b>Attentional filtering during learning</b> (redrawn from current work; statistics pending). The decoder reads the target (rewarded) feature well above chance on trials where the animal is still learning the block (blue), and near chance once the feature is learned and behavior is automatic (orange). The relevant feature is strongly represented while it is being attended, then its explicit representation fades.</figcaption>
-</figure>
-
-This is a genuinely interesting neuroscience result on its own: it says the representation of what
-matters is not constant, it is filtered by attention and by where the animal is in learning. It is also
-a problem for a decoder.
-
-## Why that breaks a decoder {#persistent}
+## Why persistent coding breaks {#persistent}
 
 Most sequence decoders assume **persistent coding**: that the thing you are reading is present at every
 time step, so every window of the trial can be treated as equally informative. If the signal actually
 comes and goes, that assumption costs you twice. You dilute the informative moments by averaging them
 with uninformative ones, and you have no way to tell, on a given trial, whether the information was
-there at all. The attentional-filtering result is exactly this problem made visible: the code is strong
+there at all. The attentional-filtering finding is exactly this problem made visible: the code is strong
 in some conditions and some moments and absent in others.
 
 So the redesign has two jobs: find the informative moments, and know when there are none.
@@ -156,9 +125,8 @@ commit when the code is not there rather than guessing.
 The payoff I am after is twofold. Practically, gating on confidence lets you read out only the trials
 and features that carry information, instead of checking every one by hand. Scientifically, the
 confidence heads are a way to **probe trial-by-trial shifts in feature information without post-hoc
-behavioral labels**, which is what makes them interesting as a link back to the attentional-filtering
-result: task and trial confidence should track when the animal is attending and where it is in
-learning.
+behavioral labels**, which is what makes them a link back to the attentional-filtering result: task and
+trial confidence should track when the animal is attending and where it is in learning.
 
 ## Stitching sessions together {#stitching}
 
@@ -173,14 +141,14 @@ being stabilized.
 Stated honestly: the goal here is not necessarily a higher raw accuracy than the original decoder. It
 is a decoder that **knows what it knows**, that can find information sparse in time and flag trials
 where there is none, and that gives a label-free readout of when the brain is representing the feature
-it cares about. That readout is the bridge from the neuroscience finding (attentional filtering) to a
-usable method.
+it cares about. That readout is the bridge from the neuroscience finding
+([attentional filtering]({{ '/writing/attentional-filtering/' | relative_url }})) to a usable method.
 
-Where it stands: the attentional-filtering analysis is close to a neuroscience write-up, with
-statistics still being finalized. The confidence-gated method is implemented and being refined; I am
-targeting a **NeurIPS** submission on the method, with a workshop version and an **SfN** abstract along
-the way. The [PyTorch reimplementation]({{ '/projects/neural-data-decoding/' | relative_url }}) is part
-of getting there. This is the "understand" step of my
+Where it stands: the method is implemented and being refined, with the stitching-and-fusion module the
+main piece still being stabilized. I am targeting a machine-learning submission on the method, with a
+workshop version along the way. The
+[PyTorch reimplementation]({{ '/projects/neural-data-decoding/' | relative_url }}) is part of getting
+there. This is the "understand" step of my
 [longer arc]({{ '/writing/decode-understand-alter/' | relative_url }}), pushed toward asking, trial by
 trial, exactly what information the signal carries.
 
