@@ -1,4 +1,5 @@
 ---
+published: false  # hidden pending review -- see README
 title: Feature attribution as a bridge to interpretability
 order: 2
 date: 2026-07-16
@@ -16,7 +17,7 @@ toc:
   - { id: "method", label: "The method: remove and measure" }
   - { id: "found", label: "What it found" }
   - { id: "bridge", label: "The bridge to interpretability" }
-  - { id: "ends", label: "Where the bridge ends" }
+  - { id: "ends", label: "Where the bridge leads" }
   - { id: "caveats", label: "How I read the results" }
   - { id: "refs", label: "References" }
 ---
@@ -154,17 +155,17 @@ inside a network yet, and it is exactly the next step I am moving toward. My ver
 recordings and a decoder rather than on a transformer, but the logic is the same: intervene, then
 measure.
 
-## Where the bridge ends {#ends}
+## Where the bridge leads {#ends}
 
-I want to be precise about the limit, because overclaiming here is both checkable and self-defeating.
+I want to be precise about what this is, because overclaiming here is both checkable and self-defeating.
 
-I have **not** done mechanistic interpretability of transformers or large language models. I have not
-trained sparse autoencoders on an LLM, built attribution or circuit graphs, or studied superposition.
-The attribution I have done is on my **own** neural decoders and on real neural data. What transfers is
-the way of thinking: intervene and measure, treat the model as an object of study. I am deliberately
-moving that skill toward artificial networks. The claim I can stand behind is that I do this
-neuroscience-of-networks work on biological systems, and I am learning the transformer-specific tools
-now.
+The attribution I have done is on my **own** neural decoders and on real neural data: intervene,
+measure, treat the model as an object of study, and hold the answer to a significance bar. In the
+[workshop paper]({{ '/writing/attentional-filtering/' | relative_url }}) that became exact attribution,
+with per-area Shapley shares that sum to the decoder's accuracy and are tested at the session level. The
+claim I stand behind is that I do this neuroscience-of-networks work on biological systems, and that the
+way of working is what carries over. I am deliberately pointing it at artificial networks, and I am
+learning the transformer-specific tools now.
 
 ## How I read the results {#caveats}
 

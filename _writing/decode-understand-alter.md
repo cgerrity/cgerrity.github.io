@@ -1,4 +1,5 @@
 ---
+published: false  # hidden pending review -- see README
 title: "Decode, understand, alter: the shape of the work"
 order: 3
 date: 2026-07-16
@@ -133,7 +134,7 @@ Two directions follow from this. One is **mechanistic interpretability of artifi
 is the same understand step aimed at a network whose weights are fully visible. The other is my current
 work, which splits in two: a neuroscience finding,
 [attentional filtering during learning]({{ '/writing/attentional-filtering/' | relative_url }}), that
-the brain's explicit code for the rewarded feature comes and goes as an animal learns; and the
+which brain area carries the rewarded feature shifts as an animal learns the rule; and the
 [confidence-gated decoder]({{ '/writing/beyond-persistent-coding/' | relative_url }}) it motivates,
 which asks, trial by trial, how much information the signal actually carries and stitches multiple
 sessions into one model.

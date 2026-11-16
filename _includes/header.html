@@ -7,7 +7,9 @@
     <nav class="nav" aria-label="Primary">
       <a href="{{ '/' | relative_url }}" {% if u == "/" %}class="active" aria-current="page"{% endif %}>Home</a>
       <a href="{{ '/projects/' | relative_url }}" {% if u contains "/projects" %}class="active" aria-current="page"{% endif %}>Research</a>
+      {%- if site.writing.size > 0 %}
       <a href="{{ '/writing/' | relative_url }}" {% if u contains "/writing" %}class="active" aria-current="page"{% endif %}>Writing</a>
+      {%- endif %}
       <a href="{{ '/publications/' | relative_url }}" {% if u contains "/publications" %}class="active" aria-current="page"{% endif %}>Publications</a>
       <a href="{{ '/about/' | relative_url }}" {% if u contains "/about" %}class="active" aria-current="page"{% endif %}>About</a>
       <a href="{{ site.links.cv | relative_url }}">CV</a>

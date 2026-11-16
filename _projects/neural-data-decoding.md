@@ -64,11 +64,11 @@ verified it **component by component**: encoder, bottleneck, classifier, and the
 - The **full composite forward pass matches the MATLAB original to roughly 1e-9** (maximum absolute
   difference), the tightest of the checks; the recurrent encoder stacks agree to about 1e-7. The
   automated test gate is set at a looser **1e-5**, so the observed agreement is far inside it.
-- A separate general suite of **roughly 800 tests** covers the data pipeline, stratified sampling,
+- A separate general suite of **825 tests** covers the data pipeline, stratified sampling,
   checkpointing, and the MATLAB-to-PyTorch weight conversion.
 
 These are two different things and I keep them distinct: the ~1e-9 figure is the measured
-composite forward-pass parity, and the ~800 tests are the general suite, not a certification of that number.
+composite forward-pass parity, and the 825 tests are the general suite, not a certification of that number.
 
 ## Engineering choices
 

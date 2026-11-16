@@ -14,8 +14,7 @@ period: 2022–2024
 stack: [MATLAB, Channel ablation, Monte Carlo search]
 tags: [Attribution, Explainability, Interpretability]
 links:
-  - { label: "Explainer: the bridge to interpretability", url: "/writing/attribution-as-interpretability/", primary: true }
-  - { label: "Preprint", url: "https://www.biorxiv.org/content/10.1101/2025.08.20.671126v1" }
+  - { label: "Preprint", url: "https://www.biorxiv.org/content/10.1101/2025.08.20.671126v1", primary: true }
 description: >-
   Removal-based feature attribution on a neural decoder, framed as the honest
   bridge from systems neuroscience to mechanistic interpretability.
@@ -70,18 +69,20 @@ together), while the prefrontal cortex was most relevant for **individual-channe
 </figure>
 
 In later work, analyzing the trained model further surfaced a property I had not built in: it sharpens
-for particular feature dimensions on particular trials, a kind of attentional filtering. That is an
-ongoing analysis rather than a result of the removal study above.
+for particular feature dimensions on particular trials, a kind of attentional filtering. Chasing that
+down is what pushed the method past single-removal search. Occluding **every subset of areas** and
+averaging each area's gain over every order of addition gives the exact Shapley value with the area as
+the unit, so the shares are not an approximation and they sum to the decoder's chance-corrected
+accuracy. That version of the attribution carries the first-author paper accepted at the
+NeurIPS 2026 Brain and Body workshop.
 
 ## Why this is my bridge to interpretability
 
 Perturb a component, measure the effect on the output, attribute function. **Zeroing a channel and
 watching accuracy fall is ablation**, one of the core tools of mechanistic interpretability. I have
-done it on my own neural decoders and on real neural data, which is the honest version of the claim. I
-have **not** trained sparse autoencoders on a transformer, built circuit graphs, or studied
-superposition; the natural next step, **activation patching** inside a network, is exactly the kind of
-work I am moving toward, and the [full explainer]({{ '/writing/attribution-as-interpretability/' | relative_url }})
-draws the line between the two carefully.
+done it on my own neural decoders and on real neural data, with exact attribution where exactness is
+available and a significance bar where it is not. The natural next step is to move from the inputs into
+the network itself, with **activation patching**, and that is the work I am set up to take on.
 
 ## What I would flag
 

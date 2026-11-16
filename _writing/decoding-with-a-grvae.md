@@ -1,4 +1,5 @@
 ---
+published: false  # hidden pending review -- see README
 title: Decoding value-based choice with a gated-recurrent VAE
 order: 1
 date: 2026-07-16

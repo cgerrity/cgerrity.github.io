@@ -71,7 +71,7 @@ description: >-
     <div class="section-head">
       <div class="eyebrow">Selected work</div>
       <h2>Three things worth a closer look</h2>
-      <p class="lead">The decoder, the attribution method I used to interrogate it, and a write-up of how it works.</p>
+      <p class="lead">The decoder I built, the attribution method I use to interrogate it and what that method found, and the framework that turned raw recordings into data in the first place.</p>
     </div>
 
     <div class="card-grid featured-grid">
@@ -93,13 +93,14 @@ description: >-
       </article>
 
       <article class="card">
-        <span class="card-kicker">The interpretability bridge</span>
+        <span class="card-kicker">The interpretability bridge · accepted workshop paper</span>
         <h3><a href="{{ '/projects/importance-analysis/' | relative_url }}">Feature attribution on my own decoders</a></h3>
         <p>
-          Zero out an input channel, or a group of channels, and measure how far decoding
-          accuracy falls. This located area-specific contributions to the decode: the anterior
-          cingulate cortex for population-level contributions, the prefrontal cortex for
-          individual ones. It is the same move ablation makes on an artificial network.
+          Zero out an input channel, or a whole brain area, and measure how far decoding
+          accuracy falls. That is the same move ablation makes on an artificial network. Scoring
+          each area by its exact Shapley share of the decoder's accuracy dissociates the anterior
+          cingulate cortex and the caudate head across learning, a result accepted at the NeurIPS
+          2026 Brain and Body workshop.
         </p>
         <div class="card-meta">
           <span class="tag">Attribution</span>
@@ -109,18 +110,19 @@ description: >-
       </article>
 
       <article class="card">
-        <span class="card-kicker">Writing</span>
-        <h3><a href="{{ '/writing/decoding-with-a-grvae/' | relative_url }}">How the decoder works, without the code</a></h3>
+        <span class="card-kicker">Doctoral research · research engineering</span>
+        <h3><a href="{{ '/projects/matlab-framework/' | relative_url }}">A hand-written deep-learning framework</a></h3>
         <p>
-          A self-contained walkthrough of the model: the reparameterization trick, what the
-          latent space is doing, and how each accuracy number is actually scored. Includes an
-          interactive figure so you can see the sampling step for yourself.
+          The 200+ function MATLAB framework behind the decoder: a signal pipeline from raw
+          30 kHz voltage to roughly 30,000 behavior-aligned trials, a modular architecture
+          engine, hierarchical stratified cross-validation, and the channel-map fix that
+          unblocked a stalled dataset.
         </p>
         <div class="card-meta">
-          <span class="tag">Explainer</span>
-          <span class="tag">Interactive</span>
+          <span class="tag">MATLAB</span>
+          <span class="tag">Signal processing</span>
         </div>
-        <span class="card-arrow">Read the write-up →</span>
+        <span class="card-arrow">Read more →</span>
       </article>
     </div>
   </div>
@@ -137,9 +139,10 @@ description: >-
         <span class="card-kicker">Moving in</span>
         <h3>Mechanistic interpretability</h3>
         <p>
-          I reverse-engineer how a trained network turns activity into an output, and I verify
-          my claims carefully. I have done this on my own neural decoders, not yet on
-          transformers, and I am deliberately moving into interpretability of artificial
+          I reverse-engineer how a trained network turns activity into an output, and I verify my
+          claims carefully: exact attribution rather than an approximation, and significance testing
+          at the level the data actually varies. I have done this on my own neural decoders and on
+          real neural data, and I am deliberately moving into interpretability of artificial
           networks. <a href="{{ '/about/' | relative_url }}">More on the transition →</a>
         </p>
       </div>
@@ -173,16 +176,16 @@ description: >-
     </div>
     <ul class="news">
       <li>
-        <time datetime="2026-07">Jul 2026</time>
-        <span class="news-body">Published new writing: <a href="{{ '/writing/decoding-with-a-grvae/' | relative_url }}">decoding value-based choice with a GRVAE</a>, <a href="{{ '/writing/attribution-as-interpretability/' | relative_url }}">feature attribution as a bridge to interpretability</a>, and <a href="{{ '/writing/decode-understand-alter/' | relative_url }}">the research arc that connects them</a>.</span>
+        <time datetime="2026-12">Dec 2026</time>
+        <span class="news-body">Poster at the <a href="https://brainbodyfm-workshop.github.io/">NeurIPS 2026 Workshop on Foundation Models for the Brain and Body</a> in Sydney, on December 12.</span>
       </li>
       <li>
-        <time datetime="2026-07">Jul 2026</time>
-        <span class="news-body">New explainer: a detailed, interactive walkthrough of the <a href="{{ '/writing/neural-data-pipeline/' | relative_url }}">neural-data preprocessing and processing pipeline</a>.</span>
+        <time datetime="2026-11">Nov 2026</time>
+        <span class="news-body">Poster at the Society for Neuroscience annual meeting (Washington, DC) on the confidence-gated decoder.</span>
       </li>
       <li>
-        <time datetime="2026-07">Jul 2026</time>
-        <span class="news-body">Wrote up my current work in two pieces: <a href="{{ '/writing/attentional-filtering/' | relative_url }}">attentional filtering during learning</a>, and the <a href="{{ '/writing/beyond-persistent-coding/' | relative_url }}">confidence-gated decoder</a> it motivates.</span>
+        <time datetime="2026-10">Oct 2026</time>
+        <span class="news-body">First-author paper accepted at the NeurIPS 2026 Brain and Body workshop: role-agnostic latent decoding dissociates the rewarded feature across learning in the anterior cingulate cortex and the caudate.</span>
       </li>
       <li>
         <time datetime="2025-11">Nov 2025</time>

@@ -1,4 +1,5 @@
 ---
+published: false  # hidden pending review -- see README
 title: "From electrode to tensor: the neural-data pipeline"
 order: 4
 date: 2026-07-16

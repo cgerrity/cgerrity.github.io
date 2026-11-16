@@ -1,8 +1,9 @@
 ---
+published: false  # hidden pending review -- see README
 title: "Beyond persistent coding: confidence-gated decoding"
 order: 6
 date: 2026-07-16
-status: Work in progress
+status: Work in progress &middot; SfN 2026 poster
 dek: >-
   If the neural code for a feature comes and goes, a decoder that assumes it is
   always present is the wrong tool. My current method reads the feature when it is
@@ -24,8 +25,9 @@ toc:
 
 <div class="callout">
   <span class="callout-title">Work in progress</span>
-  This describes active, unpublished work. The method is built and still being refined; the numbers and
-  claims here are current directions, not settled results.
+  This describes active, unpublished work. The method is built and still being refined, and the abstract
+  is accepted for a poster at the Society for Neuroscience annual meeting in November 2026. The claims
+  here are the design and its motivation, not settled results on the recordings.
 </div>
 
 ## The short version {#short-version}
@@ -33,9 +35,10 @@ toc:
 My [dissertation decoder]({{ '/writing/decoding-with-a-grvae/' | relative_url }}) assumed, like most
 neural decoders, that the information it needs is present at every moment of a trial. The neuroscience
 says otherwise. The [attentional-filtering result]({{ '/writing/attentional-filtering/' | relative_url }})
-shows that the brain's explicit code for the rewarded feature is strong while an animal is learning a
-block and fades once the choice becomes automatic, and within a single trial the decisive signal is
-there at some moments and not others. My current work rebuilds the decoder to handle both: a
+shows that the areas carrying the rewarded feature change as an animal learns the rule, so a single
+fixed mapping from activity to features averages over a session that is not stationary, and within a
+single trial the decisive signal is there at some moments and not others. My current work rebuilds the
+decoder to handle both: a
 **confidence-gated, multiple-instance** model that reads the feature when it is there, and tells you when
 it is not, without needing behavioral labels to do so.
 
@@ -145,8 +148,10 @@ it cares about. That readout is the bridge from the neuroscience finding
 ([attentional filtering]({{ '/writing/attentional-filtering/' | relative_url }})) to a usable method.
 
 Where it stands: the method is implemented and being refined, with the stitching-and-fusion module the
-main piece still being stabilized. I am targeting a machine-learning submission on the method, with a
-workshop version along the way. The
+main piece still being stabilized. The abstract is accepted for a poster at the Society for Neuroscience
+annual meeting in Washington, DC in November 2026, and a machine-learning submission on the method is
+the target after that; the workshop paper that went to NeurIPS 2026 is the
+[neuroscience half]({{ '/writing/attentional-filtering/' | relative_url }}) of this pair. The
 [PyTorch reimplementation]({{ '/projects/neural-data-decoding/' | relative_url }}) is part of getting
 there. This is the "understand" step of my
 [longer arc]({{ '/writing/decode-understand-alter/' | relative_url }}), pushed toward asking, trial by

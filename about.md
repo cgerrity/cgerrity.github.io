@@ -7,8 +7,8 @@ lead: >-
   mechanistic interpretability. Here is the longer version of the story.
 description: >-
   Charles Gerrity is a computational neuroscientist and ML engineer who
-  reverse-engineers how neural activity becomes decisions. About his research,
-  his move into mechanistic interpretability, and what he has and has not done.
+  reverse-engineers how neural activity becomes decisions. About his research and
+  his move into mechanistic interpretability.
 ---
 
 I went into neuroscience to help patients directly. I considered neurology and neurosurgery,
@@ -39,16 +39,20 @@ system where I can see every weight.
 - Wrote a **200+ function MATLAB deep-learning framework** by hand, and later designed and verified
   a **PyTorch reimplementation** of the pipeline that matches the original to roughly 1e-9 on a
   composite forward pass.
-- Used permutation-based attribution to ask which channels, regions, and latent units the decoder
+- Used removal-based attribution to ask which channels, regions, and latent units a trained decoder
   actually relies on, validated with Monte Carlo and permutation testing.
+- Extended that into **exact area-level Shapley attribution**: shares that are not an approximation,
+  that sum to the decoder's chance-corrected accuracy, and that are tested with session-level
+  permutation. That work is a first-author paper accepted at the NeurIPS 2026 Workshop on
+  Foundation Models for the Brain and Body.
 
-## What I have not done (yet)
+## Where my interpretability work sits
 
-I have not done mechanistic interpretability of transformers or large language models. I have not
-trained sparse autoencoders on an LLM, built attribution or circuit graphs, or studied
-superposition in a transformer. The interpretability work I have done is **feature and region
-attribution on my own neural decoders and on real neural data**. I say this plainly because the
-transferable skill is real and I would rather be precise about where the bridge actually is.
+The interpretability work I have done is **attribution on my own neural decoders, on real neural
+data**: perturbing inputs, measuring what the model loses, and holding the result to a significance
+bar. The claims are exact where exactness is available and tested where it is not. The natural next
+step is inside the network rather than at its inputs, with activation patching and the circuit-level
+tools of mechanistic interpretability, and that is the work I am set up to take on.
 
 ## What transfers
 
@@ -57,7 +61,7 @@ transferable skill is real and I would rather be precise about where the bridge 
 | From systems neuroscience | To interpretability of artificial networks |
 | :--- | :--- |
 | Reading computation out of the activity of hundreds of neurons | Reading computation out of the activations of a network |
-| Permutation and ablation of inputs, regions, and latent units | Ablation and activation patching of components |
+| Permutation, occlusion, and exact Shapley attribution over inputs, regions, and latent units | Ablation and activation patching of components |
 | Monte Carlo and permutation significance testing | Rigorous, adversarial verification of a claimed mechanism |
 | Stratified cross-validation, class-weighted training, parity checks | Reproducible, tested, production-grade experiments |
 | Working with messy, multi-terabyte experimental data | Keeping large, heterogeneous datasets organized and reproducible |
@@ -70,7 +74,7 @@ transferable skill is real and I would rather be precise about where the bridge 
   <li>
     <span class="tl-when">2025 – present</span>
     <span class="tl-what"><b>Postdoctoral Scholar</b>, Vanderbilt University (Womelsdorf lab, Dept. of Psychology)
-    <span>Attentional filtering in the trained decoder; a PyTorch port of the pipeline; confidence-gated decoding aimed at NeurIPS.</span></span>
+    <span>Attentional filtering in the trained decoder, scored with exact area-level Shapley attribution and accepted at the NeurIPS 2026 Brain and Body workshop; a PyTorch port of the pipeline; confidence-gated decoding, accepted for a poster at SfN 2026.</span></span>
   </li>
   <li>
     <span class="tl-when">2017 – 2024</span>

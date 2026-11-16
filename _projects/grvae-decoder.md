@@ -17,7 +17,6 @@ stack: [MATLAB, Deep Learning Toolbox, SLURM / HPC]
 tags: [Variational autoencoders, Neural decoding, GRU / LSTM, Electrophysiology]
 links:
   - { label: "Read the preprint", url: "https://www.biorxiv.org/content/10.1101/2025.08.20.671126v1", primary: true }
-  - { label: "Explainer: how it works", url: "/writing/decoding-with-a-grvae/" }
   - { label: "Code (PyTorch port)", url: "https://github.com/cgerrity/neural_data_decoding" }
 description: >-
   A first-author gated-recurrent variational autoencoder that decodes value-based
@@ -159,6 +158,4 @@ This decoder is the "read" side of a longer arc I set out in my qualifying exam:
 understand what in the signal drives the decode, then use that understanding to steer the choice with
 stimulation.** I executed the decoding and the understanding; the stimulation piece was a proposal, and
 I did not carry it out. The [attribution work]({{ '/projects/importance-analysis/' | relative_url }})
-is how I studied what the decoder relies on, and the [full write-up]({{ '/writing/decoding-with-a-grvae/' | relative_url }})
-walks through the model in detail. I lay out the whole arc, and where it stops, in
-[this essay]({{ '/writing/decode-understand-alter/' | relative_url }}).
+is how I studied what the decoder relies on.

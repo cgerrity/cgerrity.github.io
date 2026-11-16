@@ -1,199 +1,273 @@
 ---
+published: false  # hidden pending review -- see README
 title: "Attentional filtering during learning"
 order: 5
-date: 2026-07-16
-status: In preparation
+date: 2026-11-16
+status: NeurIPS 2026 Brain &amp; Body workshop
 dek: >-
-  A neuroscience finding from my current work: as an animal learns which feature
-  is rewarded, its brain represents that feature strongly and filters out the rest,
-  then stops representing it once the choice becomes automatic.
+  A neuroscience finding from my current work: while a monkey is working out which
+  feature earns reward, the anterior cingulate cortex carries that feature most
+  strongly; once the rule is learned, the caudate head holds it and the cingulate
+  turns toward the features of objects chosen in error.
 tags: [Current work, Neuroscience]
 description: >-
-  Current, in-progress neuroscience: using the gated-recurrent VAE decoder as a
-  probe, the rewarded feature is decodable during learning and not after, is
-  filtered above the distractors, and runs on a striatum-first, cortex-later timeline.
+  Using a gated-recurrent VAE decoder as a probe, with area contributions scored as
+  exact Shapley shares of its accuracy: the caudate head carries the rewarded feature
+  after learning, the anterior cingulate cortex carries it while learning, and after
+  learning the cingulate favors the features of objects chosen in error.
 toc:
   - { id: "short-version", label: "The short version" }
   - { id: "setup", label: "The task, and the decoder as a probe" }
-  - { id: "finding", label: "The finding" }
-  - { id: "filtering", label: "Target beats the distractors" }
-  - { id: "areas", label: "Which areas, and when" }
-  - { id: "after", label: "What comes back after learning" }
+  - { id: "scoring", label: "How an area gets credit" }
+  - { id: "caudate", label: "The caudate after learning" }
+  - { id: "acc", label: "The cingulate while learning, and after errors" }
+  - { id: "robustness", label: "Does it depend on the decoder?" }
   - { id: "meaning", label: "What it means" }
   - { id: "status", label: "Where it stands" }
   - { id: "refs", label: "References" }
 ---
 
 <div class="callout">
-  <span class="callout-title">In preparation</span>
-  This describes active, unpublished work from a manuscript in progress. The comparisons shown here are
-  pre-statistics: the figures are redrawn from current analyses and the significance tests are still being
-  finalized. Treat the directions as the result, not the exact magnitudes.
+  <span class="callout-title">Accepted, non-archival workshop paper</span>
+  This is the finding in my paper at the NeurIPS 2026 Workshop on Foundation Models for the Brain and
+  Body, accepted for a poster at the workshop in Sydney on December 12, 2026. The statistics are final.
+  The workshop is non-archival, and a longer journal version is in preparation, so the numbers below are
+  the workshop paper's and may be extended there.
 </div>
 
 ## The short version {#short-version}
 
-When a monkey is learning which visual feature earns reward, its brain represents that feature clearly,
-and represents it more strongly than the competing features it is ignoring. Once the animal has learned
-the block and its choices have gone automatic, the explicit representation of that same feature fades,
-even though the animal keeps choosing correctly. I find this by using my
-[dissertation decoder]({{ '/writing/decoding-with-a-grvae/' | relative_url }}) as a read-out probe. I
-call the effect **attentional filtering**, because it looks like attention selecting which feature is
-explicitly encoded, filtered by where the animal is in learning and by whether the feature matters.
+When a monkey is learning which visual feature of an object earns reward, I can ask which brain areas
+carry that feature, and when. The answer splits by area and by learning stage. The **head of the
+caudate** carries the rewarded feature once the rule has been learned, steadily and across the whole
+trial. The **anterior cingulate cortex** carries it most strongly in the earliest learning trials, and
+after learning its contribution drops and re-points toward the features of objects the animal chose in
+error. I get this from a decoder that was never told which feature was rewarded, whether the animal had
+learned, or how a trial ended. I call the effect **attentional filtering**, because the roles are read
+out after the fact and what changes is which role the area's contribution tracks.
 
 ## The task, and the decoder as a probe {#setup}
 
-The setup is the value-based feature-learning task from the decoder write-up: on each trial the animal
-chooses among objects that vary along four feature dimensions (shape, pattern, color, arm type), and
-across a block it learns which single feature is rewarded. When the reward rule reverses, behavior drops
-to chance and then climbs back over roughly a dozen trials as the animal relearns.
+The setup is the value-based feature-learning task from the
+[decoder write-up]({{ '/writing/decoding-with-a-grvae/' | relative_url }}). On each trial three
+multi-feature objects appear, the animal chooses one by fixating it, and token feedback follows: a gain
+if the chosen object carried the rewarded feature, a loss otherwise. Within a block one single feature
+is rewarded, and the rewarded feature changes with each new block. The **learning point** of a block is
+the trial from which the animal is reliably correct over the following run of trials; trials before it
+are "learning" and trials after it are "learned".
 
-The decoder is trained to read all four features of the chosen object on every trial, regardless of what
-is rewarded. That makes it a measuring instrument rather than a controller: if a feature is decodable
-from the neural activity, the brain is representing it in a form the model can read. Asking how that
-readout changes with learning turns the decoder into a probe of what the brain is explicitly encoding at
-each point in a block.
+Two male macaques contributed 22 recording sessions that passed a held-out decoding screen, with
+multi-unit activity from linear probes in the anterior cingulate cortex (mostly area 24c) and the head
+of the caudate. One session has no cingulate recording, so 21 sessions enter the cingulate analyses and
+22 the caudate analyses. Everything is aligned to fixation onset on the chosen object; the choice is
+likely committed around 0.3 s and feedback appears at 0.7 s.
 
-## The finding {#finding}
+The decoder is the one I built for my dissertation: a gated-recurrent variational autoencoder with one
+classifier head per feature dimension, trained per session to report **the features of the chosen
+object** and nothing else. That restriction is the whole design. The rewarded feature, a dimension's
+target or distractor status, the learning stage, the outcome, the gain or loss condition, block
+boundaries: none of it appears in the labels, the loss weights, the training schedule, or the criterion
+I use to pick a checkpoint. The model is role-agnostic by construction, so it cannot be fitting the
+story I am about to read out of it.
 
-Split the trials by whether the animal is still learning the block or has already learned it, and decode
-the **target** (rewarded) feature. The two curves come apart cleanly. On learning trials the target
-feature climbs well above chance, and the effect becomes reliable around the animal's commitment to the
-choice. On learned trials it sits at or below chance for the whole trial.
+The roles are applied afterward, to held-out predictions only, as three filters:
 
-<figure class="wide fig">
-<svg class="diagram" viewBox="0 0 720 250" role="img" aria-labelledby="af-title">
-<title id="af-title">Target-feature decoding accuracy over the trial: high during learning trials, near chance once the feature is learned</title>
-<line class="grid-line" x1="70" y1="30" x2="70" y2="205"/>
-<line class="grid-line" x1="70" y1="161" x2="680" y2="161"/>
-<text class="t-muted" x="676" y="155" text-anchor="end" font-size="11">chance</text>
-<line class="grid-line" x1="246" y1="30" x2="246" y2="205" stroke-dasharray="3 3" opacity="0.6"/><text class="t-muted" x="246" y="224" text-anchor="middle" font-size="11">fixation</text>
-<line class="grid-line" x1="494" y1="30" x2="494" y2="205" stroke-dasharray="3 3" opacity="0.6"/><text class="t-muted" x="494" y="224" text-anchor="middle" font-size="11">choice</text>
-<text class="t-muted" x="64" y="122" text-anchor="end" font-size="11">0.05</text>
-<text class="t-muted" x="64" y="78" text-anchor="end" font-size="11">0.10</text>
-<polyline fill="none" stroke="#3b5a9a" stroke-width="2.6" stroke-linejoin="round" points="70.0,161.2 105.3,156.9 140.6,143.8 175.9,117.5 211.2,121.9 246.5,117.5 281.8,107.0 317.1,98.2 352.4,78.1 387.6,86.9 422.9,73.7 458.2,82.5 493.5,84.2 528.8,91.2 564.1,88.6 599.4,86.0 634.7,89.5 670.0,86.9"/>
-<polyline fill="none" stroke="#d1682f" stroke-width="2.6" stroke-linejoin="round" points="70.0,187.5 140.6,187.5 211.2,180.5 246.5,178.8 299.4,174.4 352.4,170.0 422.9,165.6 493.5,168.2 564.1,174.4 599.4,178.8 670.0,183.1"/>
-<text class="t-muted" x="18" y="115" text-anchor="middle" transform="rotate(-90 18 115)" font-size="11">scaled accuracy</text>
-<line x1="500" y1="46" x2="524" y2="46" stroke="#3b5a9a" stroke-width="2.6"/><text x="530" y="50">Learning</text>
-<line x1="600" y1="46" x2="624" y2="46" stroke="#d1682f" stroke-width="2.6"/><text x="630" y="50">Learned</text>
-</svg>
-<figcaption><b>Attentional filtering during learning</b> (redrawn from current work; statistics pending). The decoder reads the target (rewarded) feature well above chance on trials where the animal is still learning the block (blue), and at or below chance once the feature is learned and behavior is automatic (orange). The relevant feature is strongly represented while it is being attended, then its explicit representation fades.</figcaption>
-</figure>
+- **target** — the rewarded dimension of objects the animal chose correctly;
+- **distractor (correct)** — the other non-neutral dimensions of those same correct objects, the
+  features that could be confused with the target until the rule is learned;
+- **distractor (error)** — the non-neutral dimensions of objects the animal chose in error, including
+  the rewarded dimension, which on such an object carries a non-rewarded value.
 
-The direction is worth sitting with. The animal is performing *better* on learned trials, and yet the
-feature that drives the reward is *less* readable from the neural activity. Explicit representation of
-the rewarded feature is a signature of the learning phase, not of good performance. Binning by how far a
-trial is from the animal's learning change-point sharpens this: peak decoding is highest on the trials
-just before the animal locks in the rule, and it collapses once the rule is learned. The representation
-behaves like an attentional spotlight that is brightest while the animal is working out what matters and
-dims once the behavior no longer needs it.
+Accuracy is chance-corrected, with 0 at chance and 1 at perfect classification, and chance is estimated
+by Monte Carlo sampling from class-frequency-matched random predictions rather than assumed from the
+number of classes.
 
-## Target beats the distractors {#filtering}
+## How an area gets credit {#scoring}
 
-If this is really attentional filtering, the rewarded feature should be represented not just strongly but
-*preferentially*, above the features the animal is ignoring. It is. Separating each feature into the
-**target** (the rewarded feature), the **distractor on correct trials** (an unrewarded feature the animal
-chose correctly around), and the **distractor on error trials** gives a clean ordering during learning:
-target first, correct-trial distractor second, error-trial distractor last.
+The attribution is the part I expect to outlive the finding. I occlude each area's inputs by setting
+its channels to zero, which is also their mean, and I do this for **every subset of areas**, recomputing
+the filtered accuracy each time. An area's share is then the accuracy the decoder gains when that area
+is added, averaged over every order in which the areas could be added. That is the exact Shapley value
+with the area as the unit, which means the shares are not an approximation and they **sum to the
+decoder's chance-corrected accuracy**. A share, written Φ, is in units of chance-corrected accuracy
+rather than a proportion.
 
-<figure class="wide fig">
-<svg class="diagram" viewBox="0 0 720 268" role="img" aria-labelledby="td-title">
-<title id="td-title">Target versus distractor decoding. During learning the rewarded target feature is decoded best, then distractor features on correct trials, then on error trials. Once learned, the target is gone and the distractor feature on error trials becomes decodable.</title>
-<line x1="150" y1="24" x2="176" y2="24" stroke="#3b5a9a" stroke-width="2.6"/><text x="182" y="28" font-size="12">target feature</text>
-<line x1="300" y1="24" x2="326" y2="24" stroke="#d1682f" stroke-width="2.6"/><text x="332" y="28" font-size="12">distractor · correct</text>
-<line x1="490" y1="24" x2="516" y2="24" stroke="#e0a82e" stroke-width="2.6"/><text x="522" y="28" font-size="12">distractor · error</text>
-<line class="grid-line" x1="70" y1="45" x2="70" y2="228"/>
-<line class="grid-line" x1="70" y1="210" x2="320" y2="210"/>
-<line class="grid-line" x1="195" y1="45" x2="195" y2="228" stroke-dasharray="3 3" opacity="0.55"/>
-<text class="t-muted" x="195" y="245" text-anchor="middle" font-size="11">choice</text>
-<text class="t-title" x="195" y="58" text-anchor="middle" font-size="13">During learning</text>
-<line class="grid-line" x1="400" y1="45" x2="400" y2="228"/>
-<line class="grid-line" x1="400" y1="210" x2="650" y2="210"/>
-<line class="grid-line" x1="525" y1="45" x2="525" y2="228" stroke-dasharray="3 3" opacity="0.55"/>
-<text class="t-muted" x="525" y="245" text-anchor="middle" font-size="11">choice</text>
-<text class="t-title" x="525" y="58" text-anchor="middle" font-size="13">Once learned</text>
-<text class="t-muted" x="64" y="214" text-anchor="end" font-size="11">0</text>
-<text class="t-muted" x="64" y="83" text-anchor="end" font-size="11">0.10</text>
-<text class="t-muted" x="686" y="204" text-anchor="end" font-size="11">chance</text>
-<text class="t-muted" x="20" y="140" text-anchor="middle" transform="rotate(-90 20 140)" font-size="11">scaled accuracy</text>
-<polyline fill="none" stroke="#e0a82e" stroke-width="2.6" stroke-linejoin="round" points="70.0,229.6 99.4,223.1 128.8,210.0 143.5,196.9 172.9,181.2 195.0,170.8 217.1,162.9 239.1,157.7 261.2,155.1 290.6,152.5 320.0,149.8"/>
-<polyline fill="none" stroke="#d1682f" stroke-width="2.6" stroke-linejoin="round" points="70.0,216.5 99.4,210.0 128.8,194.3 143.5,181.2 172.9,164.2 195.0,151.2 217.1,142.0 239.1,136.8 261.2,138.1 290.6,134.2 320.0,131.5"/>
-<polyline fill="none" stroke="#3b5a9a" stroke-width="2.6" stroke-linejoin="round" points="70.0,203.5 99.4,194.3 128.8,170.8 143.5,144.6 172.9,118.5 195.0,94.9 217.1,79.2 231.8,74.0 253.8,84.5 275.9,92.3 297.9,89.7 320.0,94.9"/>
-<polyline fill="none" stroke="#e0a82e" stroke-width="2.6" stroke-linejoin="round" points="400.0,223.1 429.4,216.5 458.8,203.5 488.2,183.8 517.6,157.7 547.1,134.2 576.5,118.5 598.5,110.6 620.6,108.0 650.0,111.9"/>
-<polyline fill="none" stroke="#d1682f" stroke-width="2.6" stroke-linejoin="round" points="400.0,225.7 444.1,217.8 473.5,210.0 517.6,204.8 547.1,202.2 576.5,204.8 605.9,210.0 650.0,215.2"/>
-<polyline fill="none" stroke="#3b5a9a" stroke-width="2.6" stroke-linejoin="round" points="400.0,223.1 444.1,220.5 473.5,216.5 517.6,210.0 547.1,207.4 576.5,210.0 605.9,213.9 650.0,216.5"/>
-</svg>
-<figcaption><b>The decoder filters in the rewarded feature</b> (redrawn from current work; statistics pending). <b>Left:</b> while the animal is learning, the rewarded <i>target</i> feature is decoded best, the unrewarded <i>distractor</i> features on correct trials next, and distractor features on error trials least. That ordering is the attentional filter: the feature that matters is represented most strongly. <b>Right:</b> once the block is learned the target feature is no longer decodable, and instead the distractor feature on error trials becomes readable, as if the code that survives is the one that explains the mistake.</figcaption>
-</figure>
+This replaces the ranked and random channel-removal search I used in the
+[dissertation attribution work]({{ '/projects/importance-analysis/' | relative_url }}). Removing one
+input at a time leaves credit ambiguous when inputs are correlated; averaging over every order of
+addition is what resolves it.
 
-That ordering is the filter itself. The brain is not just representing the object; it is preferentially
-representing the feature that currently matters and suppressing the ones that do not.
+Statistics are reduced to sessions. Values are tested against the chance null on the Φ scale, contrasts
+use session-level permutation, time courses use cluster-mass permutation, and p-values are
+Benjamini-Hochberg adjusted within each family of panels at α = 0.05. Three summary metrics each get
+their own test: the **peak** of the time course, the **average** over the fixation period, and cluster
+statistics over the full time course. They can disagree when an effect is concentrated in time, so I
+name the metric with every number below.
 
-## Which areas, and when {#areas}
+## The caudate after learning {#caudate}
 
-Ablating each recording region in turn, by zeroing its inputs and measuring the drop in target-feature
-decoding, gives an area-specific timing pattern. The caudate carries the rewarded feature earliest, before
-the decision. The anterior cingulate cortex rises more slowly and ends up carrying it most strongly. The
-prefrontal cortex contributes latest, around the feedback that tells the animal whether it was right.
+Once the animal has reached the learning point, the caudate head's target-feature share is well above
+chance (average Φ = 0.032, *p* = 2 × 10⁻⁵, 22 sessions), and its time course carries a single
+significant cluster that spans the entire analysis window. It is above chance in every bin of trials
+after the learning point and at every distractor load. It also exceeds the share for the **same trials'**
+distractor features (target 0.032 versus distractor-correct 0.010, paired *p* = 0.022), while that
+distractor share is itself above chance.
+
+During learning the caudate share is smaller and still above chance (average Φ = 0.020, *p* = 0.022),
+with no significant cluster, and it is not above chance more than five trials before the learning point
+(Φ = 0.010, *p* = 0.21).
+
+So the caudate looks like a stable, feature-specific readout of the rule the animal has settled on, with
+the target preferred over the features it is ignoring on those very trials.
+
+## The cingulate while learning, and after errors {#acc}
+
+The cingulate runs the other way. Its **peak** target-feature share is higher during learning than after
+(0.076 versus 0.023, paired *p* = 0.0022, 21 sessions). On the **average** metric the two stages do not
+differ (0.030 versus 0.006, *p* = 0.25) and both are above chance, and the post-learning time course
+still carries a significant cluster. Cingulate target information after learning is therefore reduced,
+not absent, and I say it that way because the two metrics disagree.
 
 <figure class="wide fig">
-<svg class="diagram" viewBox="0 0 720 250" role="img" aria-labelledby="area-title">
-<title id="area-title">Target-feature decoding by brain area during learning: caudate rises earliest and before the decision, the anterior cingulate cortex ends highest, prefrontal cortex contributes latest around feedback</title>
-<line class="grid-line" x1="70" y1="30" x2="70" y2="205"/>
-<line class="grid-line" x1="70" y1="205" x2="680" y2="205"/>
-<line class="grid-line" x1="246" y1="30" x2="246" y2="205" stroke-dasharray="3 3" opacity="0.6"/><text class="t-muted" x="246" y="224" text-anchor="middle" font-size="11">fixation</text>
-<line class="grid-line" x1="494" y1="30" x2="494" y2="205" stroke-dasharray="3 3" opacity="0.6"/><text class="t-muted" x="494" y="224" text-anchor="middle" font-size="11">choice</text>
-<text class="t-muted" x="64" y="142" text-anchor="end" font-size="11">0.05</text>
-<text class="t-muted" x="64" y="74" text-anchor="end" font-size="11">0.10</text>
-<polyline fill="none" stroke="#8b5fae" stroke-width="2.6" stroke-linejoin="round" points="70.0,137.7 140.6,104.0 211.2,86.5 246.5,79.8 317.1,71.7 352.4,69.0 422.9,69.0 458.2,73.1 493.5,100.0 546.5,83.8 599.4,70.4 670.0,70.4"/>
-<polyline fill="none" stroke="#4a9b5e" stroke-width="2.6" stroke-linejoin="round" points="70.0,178.1 140.6,160.6 211.2,144.4 246.5,135.0 317.1,116.2 352.4,105.4 422.9,89.2 493.5,78.5 564.1,70.4 599.4,66.3 670.0,62.3"/>
-<polyline fill="none" stroke="#3b82c4" stroke-width="2.6" stroke-linejoin="round" points="70.0,180.8 140.6,172.7 211.2,167.3 246.5,163.3 317.1,156.5 352.4,151.2 422.9,143.1 493.5,135.0 546.5,124.2 599.4,110.8 634.7,102.7 670.0,100.0"/>
-<text class="t-muted" x="18" y="115" text-anchor="middle" transform="rotate(-90 18 115)" font-size="11">scaled accuracy</text>
-<line x1="420" y1="46" x2="444" y2="46" stroke="#8b5fae" stroke-width="2.6"/><text x="450" y="50">caudate</text>
-<line x1="536" y1="46" x2="560" y2="46" stroke="#4a9b5e" stroke-width="2.6"/><text x="566" y="50">ACC</text>
-<line x1="620" y1="46" x2="644" y2="46" stroke="#3b82c4" stroke-width="2.6"/><text x="650" y="50">PFC</text>
+<svg class="diagram" viewBox="0 0 720 292" role="img" aria-labelledby="phi-title">
+<title id="phi-title">Shapley shares of chance-corrected accuracy. The anterior cingulate cortex peak share is 0.076 during learning and 0.023 after learning. The caudate average share is 0.020 during learning, 0.032 after learning for the target feature, and 0.010 after learning for distractor features on the same trials.</title>
+<text class="t-title" x="90" y="22" font-size="13">ACC 24c · peak Φ</text>
+<text class="t-title" x="420" y="22" font-size="13">Caudate head · average Φ</text>
+<line class="grid-line" x1="90" y1="66" x2="90" y2="210"/>
+<line class="grid-line" x1="90" y1="210" x2="330" y2="210"/>
+<line class="grid-line" x1="90" y1="140" x2="330" y2="140" stroke-dasharray="3 3" opacity="0.45"/>
+<text class="t-muted" x="84" y="214" text-anchor="end" font-size="11">0</text>
+<text class="t-muted" x="84" y="144" text-anchor="end" font-size="11">0.04</text>
+<text class="t-muted" x="84" y="74" text-anchor="end" font-size="11">0.08</text>
+<text class="t-muted" x="42" y="140" text-anchor="middle" transform="rotate(-90 42 140)" font-size="11">share of accuracy</text>
+<rect x="130" y="77" width="60" height="133" fill="#d1682f"/>
+<rect x="230" y="170" width="60" height="40" fill="#4a9b5e"/>
+<text x="160" y="70" text-anchor="middle" font-size="11">0.076</text>
+<text x="260" y="163" text-anchor="middle" font-size="11">0.023</text>
+<path d="M160 64 L160 56 L260 56 L260 155" fill="none" stroke="currentColor" stroke-width="1" opacity="0.5"/>
+<text class="t-muted" x="210" y="50" text-anchor="middle" font-size="11">p = 0.0022</text>
+<text class="t-muted" x="160" y="230" text-anchor="middle" font-size="11">learning</text>
+<text class="t-muted" x="260" y="230" text-anchor="middle" font-size="11">learned</text>
+<line class="grid-line" x1="420" y1="66" x2="420" y2="210"/>
+<line class="grid-line" x1="420" y1="210" x2="690" y2="210"/>
+<line class="grid-line" x1="420" y1="140" x2="690" y2="140" stroke-dasharray="3 3" opacity="0.45"/>
+<rect x="445" y="175" width="52" height="35" fill="#d1682f"/>
+<rect x="530" y="154" width="52" height="56" fill="#4a9b5e"/>
+<rect x="615" y="192" width="52" height="18" fill="#4a9b5e" opacity="0.45"/>
+<text x="471" y="168" text-anchor="middle" font-size="11">0.020</text>
+<text x="556" y="147" text-anchor="middle" font-size="11">0.032</text>
+<text x="641" y="186" text-anchor="middle" font-size="11">0.010</text>
+<path d="M556 141 L556 128 L641 128 L641 178" fill="none" stroke="currentColor" stroke-width="1" opacity="0.5"/>
+<text class="t-muted" x="598" y="122" text-anchor="middle" font-size="11">p = 0.022</text>
+<text class="t-muted" x="471" y="230" text-anchor="middle" font-size="11">learning</text>
+<text class="t-muted" x="556" y="230" text-anchor="middle" font-size="11">learned</text>
+<text class="t-muted" x="641" y="230" text-anchor="middle" font-size="11">learned</text>
+<text class="t-muted" x="471" y="244" text-anchor="middle" font-size="11">target</text>
+<text class="t-muted" x="556" y="244" text-anchor="middle" font-size="11">target</text>
+<text class="t-muted" x="641" y="244" text-anchor="middle" font-size="11">distractor</text>
+<rect x="266" y="270" width="12" height="12" fill="#d1682f"/><text x="284" y="280" font-size="11">during learning</text>
+<rect x="400" y="270" width="12" height="12" fill="#4a9b5e"/><text x="418" y="280" font-size="11">after learning</text>
 </svg>
-<figcaption><b>Which areas carry the target feature</b> (redrawn from current work; statistics pending). Zeroing each recording area in turn (occlusion, a block-level ablation) and measuring the drop shows the rewarded feature is carried first by the caudate, before the decision, then by the anterior cingulate cortex, which ends highest. The prefrontal cortex contributes latest, around feedback. The readout of what is currently relevant runs striatum-first, cortex-later.</figcaption>
+<figcaption><b>Shares of the decoder's accuracy, by area and learning stage.</b> Values are the workshop paper's. <b>Left:</b> the cingulate's peak share is about three times larger during learning than after it. <b>Right:</b> the caudate's average share over the fixation period is above chance during learning and after it, and after learning the target feature beats the distractor features of the same trials. Peak and average are separate metrics with separate tests, which is why each panel names its own; p-values are Benjamini-Hochberg adjusted paired session permutation tests.</figcaption>
 </figure>
 
-I am stating that as a description of the timing, not a claim about the circuit mechanism, which the
-current analysis does not establish.
+Binning trials by their distance from the learning point sharpens the dissociation. The cingulate share
+is above chance only **more than five trials before** the learning point (Φ = 0.042, *p* = 0.0027), the
+one bin in which the caudate share is not above chance. In the last five trials before the learning
+point the cingulate has a significant cluster without a significant average. The caudate is above chance
+in every other bin.
 
-## What comes back after learning {#after}
+<figure class="wide fig">
+<svg class="diagram" viewBox="0 0 720 220" role="img" aria-labelledby="bin-title">
+<title id="bin-title">Which bins of trials show an above-chance target-feature share. The anterior cingulate cortex is above chance only more than five trials before the learning point, with a cluster-only effect in the last five trials before it. The caudate head is above chance in every bin except more than five trials before the learning point.</title>
+<line class="grid-line" x1="337" y1="42" x2="337" y2="146" stroke-dasharray="4 4"/>
+<text class="t-muted" x="337" y="34" text-anchor="middle" font-size="11">learning point</text>
+<text class="t-title" x="150" y="78" text-anchor="end" font-size="12">ACC 24c</text>
+<text class="t-title" x="150" y="128" text-anchor="end" font-size="12">Caudate head</text>
+<circle cx="200" cy="73" r="11" fill="#3b5a9a"/>
+<circle cx="285" cy="73" r="11" fill="none" stroke="#3b5a9a" stroke-width="3"/>
+<circle cx="390" cy="73" r="11" fill="none" stroke="currentColor" stroke-width="1.2" opacity="0.4"/>
+<circle cx="490" cy="73" r="11" fill="none" stroke="currentColor" stroke-width="1.2" opacity="0.4"/>
+<circle cx="590" cy="73" r="11" fill="none" stroke="currentColor" stroke-width="1.2" opacity="0.4"/>
+<circle cx="200" cy="123" r="11" fill="none" stroke="currentColor" stroke-width="1.2" opacity="0.4"/>
+<circle cx="285" cy="123" r="11" fill="#3b5a9a"/>
+<circle cx="390" cy="123" r="11" fill="#3b5a9a"/>
+<circle cx="490" cy="123" r="11" fill="#3b5a9a"/>
+<circle cx="590" cy="123" r="11" fill="#3b5a9a"/>
+<text class="t-muted" x="200" y="160" text-anchor="middle" font-size="11">&gt; 5 before</text>
+<text class="t-muted" x="285" y="160" text-anchor="middle" font-size="11">last 5 before</text>
+<text class="t-muted" x="390" y="160" text-anchor="middle" font-size="11">0–9 after</text>
+<text class="t-muted" x="490" y="160" text-anchor="middle" font-size="11">10–19 after</text>
+<text class="t-muted" x="590" y="160" text-anchor="middle" font-size="11">≥ 20 after</text>
+<circle cx="120" cy="196" r="8" fill="#3b5a9a"/><text x="136" y="200" font-size="11">average above chance</text>
+<circle cx="310" cy="196" r="8" fill="none" stroke="#3b5a9a" stroke-width="2.4"/><text x="326" y="200" font-size="11">cluster only</text>
+<circle cx="450" cy="196" r="8" fill="none" stroke="currentColor" stroke-width="1.2" opacity="0.4"/><text x="466" y="200" font-size="11">not above chance</text>
+</svg>
+<figcaption><b>Where in learning each area carries the target feature.</b> Columns are bins of trials relative to the block's learning point. Filled: the average share over the fixation period is above the chance null at p<sub>BH</sub> &lt; 0.05. Ring: a significant cluster in the time course without a significant average. The cingulate's one above-chance bin is the earliest, which is the only bin where the caudate is not above chance.</figcaption>
+</figure>
 
-The target feature is not the only thing that moves with learning. Once the block is learned and the
-target has dropped out of the decode, a different signal appears: on the occasional error trial, the
-**distractor** feature the animal presumably attended to is now decodable, the one thing that could
-explain the mistake. It shows up first in the caudate and then the anterior cingulate cortex, the same
-striatum-first ordering, and it is stronger when the animal has more to lose, on trials where a wrong
-choice costs more tokens. So the code does not simply switch off after learning; it re-points from the
-rewarded feature toward whatever feature is driving behavior at that moment.
+After learning, the cingulate's peak share is higher for the **distractor (error)** filter than for the
+target filter (*p* = 9.6 × 10⁻⁴) and than for the distractor (correct) filter (*p* = 0.0073), and the
+distractor-error average is above chance (Φ = 0.020, *p* = 0.017). The average contrast against the
+target is not significant (*p* = 0.33), so this is a statement about the peak of the time course. The
+cingulate's peak target share is also higher after error trials than after correct trials (*p* = 0.020).
+Both of those fit a cingulate that tracks errors and rule changes.
+
+I am describing which area's contribution goes up and when. I am not claiming a circuit mechanism, and
+cluster extents are reported descriptively rather than as onset estimates.
+
+## Does it depend on the decoder? {#robustness}
+
+That was the obvious objection, so five further decoders were trained on the same sessions and scored
+with the same tests: a reconstruction-only model whose latent never saw the labels, an LSTM encoder, a
+feedforward encoder with layer normalization, a principal-component backbone, and a logistic-regression
+readout on the channels. Every one of the main results keeps its direction, and the model whose latent
+never saw a label reproduces both the caudate result and the cingulate learning contrast. The cingulate's
+earliest-bin result could not be tested on the reduced fold set, because too few sessions have enough
+held-out trials in that bin.
 
 ## What it means {#meaning}
 
-Read together, these say that the explicit neural code for the feature an animal cares about is not a
-fixed property of the stimulus. It is switched on while the animal is learning, filtered above the
-features it is ignoring, carried on a specific striatal-to-cortical timeline, and switched off once the
-behavior is automatic, at which point the code that remains is the one that explains errors. What the
-brain represents explicitly tracks what is currently worth attending to, not just what is on the screen.
+Two areas that both carry the rewarded feature carry it at different points in learning. The cingulate's
+contribution is largest while the animal is still working out which feature matters, and after learning
+it favors the features of objects chosen in error. The caudate's contribution is sustained once the rule
+is learned, holds at every distractor load, and prefers the target over the distractors on the same
+trials.
 
-This is a result about brains, and it is also the reason I am rebuilding the decoder. A model that
-assumes the feature is present at every moment of every trial is exactly wrong for a signal that comes
-and goes with learning and attention. The follow-on method, a confidence-gated multiple-instance decoder
-that reads the feature when it is there and reports when it is not, is described in a
-[separate write-up]({{ '/writing/beyond-persistent-coding/' | relative_url }}).
+The method is the part I expect to transfer. The shares are exact, they sum to the decoder's accuracy,
+and they are tested at the session level. None of that is specific to this architecture: it needs a
+decoder's held-out predictions with each subset of inputs occluded, a record that assigns roles to what
+was decoded, and a session identifier per trial. It applies to a decoder that was pretrained across
+sessions just as well as to one trained per session.
+
+It also says something about how to build the next decoder. The shares moved within a session as the
+animal learned, which means a model that uses one fixed mapping from activity to features for a whole
+session is averaging over that change. A decoder that inferred the session's current learning state and
+feature roles could update itself only where the recording carries information, and that is the
+motivation for the
+[confidence-gated decoder]({{ '/writing/beyond-persistent-coding/' | relative_url }}) I am building.
 
 ## Where it stands {#status}
 
-The analyses are done and consistent across the comparisons shown here; what remains is the formal
-statistics and a few extensions (feature-versus-dimension specificity, and separating feature identity
-from chosen value). This is being written up as a manuscript, and I presented an early version in a lab
-update in April 2026. It is the neuroscience half of my current work; the methods half is the
+The analyses and statistics are final for the workshop paper, which was accepted at the NeurIPS 2026
+Workshop on Foundation Models for the Brain and Body and is scheduled as a poster in Sydney on
+December 12, 2026. The workshop is non-archival. A longer journal version is in preparation and extends
+the same analyses, so some numbers here will be superseded by that version rather than contradicted. Earlier drafts of this page described the result from analyses that preceded
+the final statistics; I have rewritten it to match what the paper reports.
+
+This is the neuroscience half of my current work. The methods half is the
 [confidence-gated decoder]({{ '/writing/beyond-persistent-coding/' | relative_url }}), and both sit on
 the "understand" step of my [longer arc]({{ '/writing/decode-understand-alter/' | relative_url }}).
 
 ## References {#refs}
 
+- Gerrity, C. G., &amp; Womelsdorf, T. (2026). *Role-agnostic latent decoding dissociates target
+  information across learning in anterior cingulate cortex and caudate.* NeurIPS 2026 Workshop on
+  Foundation Models for the Brain and Body, Sydney. The paper this page describes.
 - Gerrity, C. G., Treuting, R. L., Peters, R. A., &amp; Womelsdorf, T. (2025). *Neuronal decoding of
   decisions in multidimensional feature space using a gated recurrent variational autoencoder.*
   [bioRxiv 2025.08.20.671126]({{ site.links.preprint }}). The decoder used as the read-out probe here.
+- Treuting, R. L., Banaie Boroujeni, K., Gerrity, C. G., Neumann, A., Tiesinga, P., &amp; Womelsdorf, T.
+  (2025). *Adaptive reinforcement learning is causally supported by anterior cingulate cortex and
+  striatum.* [Neuron 113(16), 2708–2723](https://doi.org/10.1016/j.neuron.2025.05.018). The
+  reinforcement-learning model used for the trial splits is from this line of work.

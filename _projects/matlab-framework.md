@@ -71,7 +71,7 @@ Deep Learning Toolbox. It covers the whole path:
 </figure>
 
 - A signal-processing pipeline that turns raw recordings into windowed multi-unit activity and roughly
-  30,000 behavior-aligned trials ([walked through step by step here]({{ '/writing/neural-data-pipeline/' | relative_url }})).
+  30,000 behavior-aligned trials.
 - A modular architecture engine (ResNet paths, depthwise-separable convolutions, multi-scale temporal
   kernels) so I could sweep model families cleanly.
 - Numerically stable classification heads, a PD-controller loss scheduler, and Monte-Carlo stratified
@@ -103,4 +103,4 @@ expect from neighboring channels. That unblocked the dataset.
 ## Used beyond my own project
 
 Three other lab members adopted the pipeline, and the same code processed the second lab's dataset.
-Along the way it supported two conference presentations and three manuscripts in preparation.
+Along the way it has supported several conference presentations, the analyses behind a refereed workshop paper, and manuscripts in preparation.
