@@ -1,4 +1,5 @@
 ---
+published: false  # hidden pending review -- see README
 title: A PyTorch reimplementation, verified to parity
 category: research
 order: 3

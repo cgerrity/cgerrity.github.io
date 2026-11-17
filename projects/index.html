@@ -3,36 +3,34 @@ layout: default
 title: Research & Projects
 permalink: /projects/
 description: >-
-  Research and engineering projects by Charles Gerrity: neural decoding with a
+  Research and engineering work by Charles Gerrity: neural decoding with a
   gated-recurrent VAE, feature attribution, a PyTorch reimplementation, a
   hand-written MATLAB framework, and signal-processing work.
 ---
-
-{%- assign research = site.projects | where: "category", "research" | sort: "order" -%}
-{%- assign side = site.projects | where: "category", "side" | sort: "order" -%}
 
 <div class="wrap">
   <header class="page-header reveal">
     <h1>Research &amp; projects</h1>
     <p class="lead">
-      A few things I built and what I learned from them. Each page states the problem, the
-      approach, the result with its exact scope, and where the code and paper live.
+      The main threads of my research and engineering work, with the paper, the code, and the
+      theses they live in.
     </p>
   </header>
 
   <section class="reveal">
     <div class="section-head"><h2>Research</h2></div>
-    <div class="card-grid">
-      {% for p in research %}
-      <article class="card">
-        {% if p.kicker %}<span class="card-kicker">{{ p.kicker }}</span>{% endif %}
-        <h3><a href="{{ p.url | relative_url }}">{{ p.title }}</a></h3>
-        <p>{{ p.card_desc | default: p.summary }}</p>
-        {% if p.tags %}<div class="card-meta">{% for t in p.tags limit: 3 %}<span class="tag">{{ t }}</span>{% endfor %}</div>{% endif %}
-        <span class="card-arrow">Read more →</span>
-      </article>
+    <ul class="pub-list">
+      {% for item in site.data.research.research %}
+      <li class="pub" id="{{ item.id }}">
+        <span class="pub-title">{{ item.title }}</span>
+        <span class="pub-venue">{{ item.meta }}</span>
+        <span class="pub-note">{{ item.note }}</span>
+        {%- if item.links %}
+        <span class="pub-links">{% for l in item.links %}<a href="{{ l.url }}">{{ l.label }}</a>{% endfor %}</span>
+        {%- endif %}
+      </li>
       {% endfor %}
-    </div>
+    </ul>
   </section>
 
   <section class="reveal">
@@ -40,16 +38,17 @@ description: >-
       <h2>Side projects</h2>
       <p class="lead">Personal builds I use to learn production ML engineering. Designed and directed by me, built with heavy use of AI coding tools.</p>
     </div>
-    <div class="card-grid">
-      {% for p in side %}
-      <article class="card">
-        {% if p.kicker %}<span class="card-kicker">{{ p.kicker }}</span>{% endif %}
-        <h3><a href="{{ p.url | relative_url }}">{{ p.title }}</a></h3>
-        <p>{{ p.card_desc | default: p.summary }}</p>
-        {% if p.tags %}<div class="card-meta">{% for t in p.tags limit: 3 %}<span class="tag">{{ t }}</span>{% endfor %}</div>{% endif %}
-        <span class="card-arrow">Read more →</span>
-      </article>
+    <ul class="pub-list">
+      {% for item in site.data.research.side %}
+      <li class="pub" id="{{ item.id }}">
+        <span class="pub-title">{{ item.title }}</span>
+        <span class="pub-venue">{{ item.meta }}</span>
+        <span class="pub-note">{{ item.note }}</span>
+        {%- if item.links %}
+        <span class="pub-links">{% for l in item.links %}<a href="{{ l.url }}">{{ l.label }}</a>{% endfor %}</span>
+        {%- endif %}
+      </li>
       {% endfor %}
-    </div>
+    </ul>
   </section>
 </div>

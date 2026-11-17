@@ -1,4 +1,5 @@
 ---
+published: false  # hidden pending review -- see README
 title: On-device card scanner
 category: side
 order: 1

@@ -1,4 +1,5 @@
 ---
+published: false  # hidden pending review -- see README
 title: A hand-written deep-learning framework for neural data
 category: research
 order: 4

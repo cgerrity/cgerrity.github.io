@@ -15,28 +15,34 @@ assets/img/            Headshot, favicon
 index.html             Home
 about.md               About / the transition narrative
 publications.html      Publications, theses, talks, press
-projects/index.html    Research + side-project listing
-_projects/*.md         One page per project
+projects/index.html    Research + side-project listing (reads _data/research.yml)
+_data/research.yml     The short entries shown on that listing
+_projects/*.md         One long page per project (currently unpublished, see below)
 writing/index.html     Explainer listing (currently unpublished, see below)
 _writing/*.md          Long-form explainers (currently unpublished, see below)
 ```
 
 ## Hidden for review
 
-The explainers in `_writing/` and the `/writing/` listing are drafts I have not reviewed
-yet, so they are kept in the repository but excluded from the published site. Each one
-carries `published: false` in its front matter, which keeps Jekyll from building it, and
-the **Writing** nav link only appears when the collection has something published in it.
+Two sets of long-form pages are drafts I have not reviewed yet. They are kept in the
+repository but excluded from the published site by a `published: false` line in their
+front matter:
 
-To put them back, delete the `published: false` line from `writing/index.html` and from
-whichever files in `_writing/` are ready. The nav link returns on its own. Pages that used
-to link to an explainer (home, publications, about, the project pages) had those links
-removed, so re-add them by hand.
+- the explainers in `_writing/`, plus the `/writing/` listing. The **Writing** nav link
+  only appears when that collection has something published in it, so it is hidden too.
+- the long project pages in `_projects/`. The `/projects/` listing still names each piece
+  of work in a sentence, from `_data/research.yml`, and links out to the paper, the code,
+  or the thesis instead.
+
+To put a page back, delete its `published: false` line (and, for an explainer, the one in
+`writing/index.html`). Links that used to point at these pages were removed from the home,
+publications, about, and listing pages, so re-add them by hand.
 
 ## Editing
 
-- Add a project: create `_projects/<slug>.md` with `category: research|side`,
-  `order:`, and the front-matter fields the `project` layout reads.
+- Add a project: add an entry to `_data/research.yml` for the listing. A long page for
+  it goes in `_projects/<slug>.md` with `category: research|side`, `order:`, and the
+  front-matter fields the `project` layout reads.
 - Add an explainer: create `_writing/<slug>.md`; it uses the `article` layout,
   auto-computes reading time, and renders a table of contents from the `toc:` list.
   Leave `published: false` out of the front matter when it is ready to go live.

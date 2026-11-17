@@ -1,4 +1,5 @@
 ---
+published: false  # hidden pending review -- see README
 title: Decoding value-based decisions with a gated-recurrent VAE
 category: research
 order: 1

@@ -1,4 +1,5 @@
 ---
+published: false  # hidden pending review -- see README
 title: Benchmarking neural-oscillation detectors
 category: research
 order: 5

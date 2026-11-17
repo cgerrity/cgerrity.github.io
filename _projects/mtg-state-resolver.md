@@ -1,4 +1,5 @@
 ---
+published: false  # hidden pending review -- see README
 title: A deterministic rules engine
 category: side
 order: 2

@@ -1,0 +1,73 @@
+# Short entries for the Research page. One sentence per note; the long write-ups
+# that used to back these live unpublished in _projects/.
+
+research:
+  - id: grvae-decoder
+    title: Decoding value-based decisions with a gated-recurrent VAE
+    meta: Doctoral research · 2021–2024
+    note: >-
+      A variational autoencoder with a recurrent encoder that decodes a monkey's chosen
+      object, along four visual feature dimensions, from 300+ simultaneously recorded
+      intracranial channels: about 62% balanced accuracy across all four features, and
+      about 80% when decoding is restricted to the rewarded feature.
+    links:
+      - { label: "Preprint", url: "https://www.biorxiv.org/content/10.1101/2025.08.20.671126v1" }
+      - { label: "PMC", url: "https://pmc.ncbi.nlm.nih.gov/articles/PMC12407684/" }
+
+  - id: attribution
+    title: Feature attribution on my own decoders
+    meta: Doctoral and postdoctoral research · 2022–present
+    note: >-
+      Removal-based attribution, and later exact area-level Shapley shares of the decoder's
+      chance-corrected accuracy, asking which channels and which brain areas a trained
+      decoder relies on. The Shapley version carries a first-author paper accepted at the
+      NeurIPS 2026 Brain and Body workshop.
+    links:
+      - { label: "Preprint", url: "https://www.biorxiv.org/content/10.1101/2025.08.20.671126v1" }
+      - { label: "Workshop", url: "https://brainbodyfm-workshop.github.io/" }
+
+  - id: pytorch-port
+    title: A PyTorch reimplementation of the decoding pipeline
+    meta: Research engineering · 2025–present
+    note: >-
+      A ground-up port of the MATLAB pipeline that I designed, directed, and verified to
+      roughly 1e-9 composite forward-pass parity with the original.
+    links:
+      - { label: "Code (GitHub)", url: "https://github.com/cgerrity/neural_data_decoding" }
+
+  - id: matlab-framework
+    title: A hand-written MATLAB deep-learning framework
+    meta: Doctoral research · 2019–2024
+    note: >-
+      A 200+ function framework I wrote by hand to turn multi-terabyte intracranial
+      recordings into behavior-aligned trials and to train decoders on a cluster.
+    links:
+      - { label: "Code (GitHub)", url: "https://github.com/cgerrity/Neural-Data-Reading" }
+
+  - id: beta-burst
+    title: Benchmarking neural-oscillation detectors
+    meta: Masters research · 2019–2021
+    note: >-
+      An offline framework that benchmarks and auto-tunes beta-band burst detection and
+      phase estimation against synthetic ground truth.
+    links:
+      - { label: "Thesis", url: "https://hdl.handle.net/1803/16957" }
+
+side:
+  - id: card-scanner
+    title: On-device card scanner
+    meta: Side project · 2026–present
+    note: >-
+      An iPhone app that identifies Magic: The Gathering cards from the camera with
+      on-device machine learning.
+    links:
+      - { label: "Code (GitHub)", url: "https://github.com/cgerrity/mtg-card-scanner" }
+
+  - id: state-resolver
+    title: A deterministic rules engine
+    meta: Side project · 2026
+    note: >-
+      A deterministic Magic: The Gathering rules engine, with the language model confined
+      to offline authoring rather than the runtime path.
+    links:
+      - { label: "Code (GitHub)", url: "https://github.com/cgerrity/mtg-state-resolver" }
